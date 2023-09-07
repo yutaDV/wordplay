@@ -1,28 +1,33 @@
 import 'package:flutter/material.dart';
 
-final lightTheme = ThemeData(
-  primaryColor: const Color(0xFFCDE4CC),
-  textTheme: const TextTheme(
-    headlineLarge: TextStyle(
-      fontSize: 48,
-      letterSpacing: 0.04,
-      color: Color(0xFF0D3A2C),
-      fontFamily: 'Montserrat',
-    ),
-    button: TextStyle(
-      fontSize: 18,
-      letterSpacing: 0.06,
-      color: Color(0xFF82FBD5),
-      fontFamily: 'Montserrat',
-    ),
-  ),
-  elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ElevatedButton.styleFrom(
-      backgroundColor: Color(0xFF0D3A2C),
-    ),
-  ),
-  floatingActionButtonTheme: FloatingActionButtonThemeData(
-    backgroundColor: Color(0xFF0D3A2C),
-    // Додаткові параметри теми...
-  ),
+final ThemeData lightTheme = ThemeData(
+    primaryColor: const Color(0xFF0D3A2C),
+    scaffoldBackgroundColor: const Color(0xFFCDE4CC),
+    appBarTheme: const AppBarTheme(
+        iconTheme: IconThemeData(color: Color(0xFFCDE4CC)),
+        backgroundColor: Color(0xFFCDE4CC),
+        elevation: 1,
+        titleTextStyle: TextStyle(
+            color: Color(0xFF0D3A2C), fontSize: 20, fontWeight: FontWeight.w700)),
+    textTheme: const TextTheme(
+        bodyLarge: TextStyle(
+            fontSize: 48.0,
+            letterSpacing: 0.04,
+            color: Color(0xFF0D3A2C),
+            height: 1.3,
+            fontFamily: 'Montserrat'
+        ),
+        bodyMedium: TextStyle(
+          color: Color(0xFF0D3A2C),
+          fontWeight: FontWeight.w500,
+          fontSize: 48,
+        ),
+        labelSmall: TextStyle(
+          color: Colors.white60,
+          fontWeight: FontWeight.w700,
+        )),
+    buttonTheme: ButtonThemeData(
+      buttonColor: Color(0xFF0D3A2C),
+),
+
 );
