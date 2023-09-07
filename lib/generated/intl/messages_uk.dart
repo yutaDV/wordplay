@@ -1,5 +1,5 @@
 // DO NOT EDIT. This is code generated via package:intl/generate_localized.dart
-// This is a library that provides messages for a en locale. All the
+// This is a library that provides messages for a uk locale. All the
 // messages from the main program should be duplicated here with the same
 // function name.
 
@@ -18,17 +18,12 @@ final messages = new MessageLookup();
 typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 
 class MessageLookup extends MessageLookupByLibrary {
-  String get localeName => 'en';
+  String get localeName => 'uk';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
-<<<<<<< HEAD
-  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{};
-=======
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "appTitle": MessageLookupByLibrary.simpleMessage("word play"),
-        "buttonLabel": MessageLookupByLibrary.simpleMessage("Click me"),
-        "welcomeMessage":
-            MessageLookupByLibrary.simpleMessage("Welcome to the game!")
+        "appTitle": MessageLookupByLibrary.simpleMessage("Гра слів"),
+        "buttonLabel": MessageLookupByLibrary.simpleMessage("Клікніть мене"),
+        "welcomeMessage": MessageLookupByLibrary.simpleMessage("вітаю!")
       };
->>>>>>> draft_local
 }

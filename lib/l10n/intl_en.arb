@@ -1,1 +1,10 @@
+<<<<<<< HEAD
 {}
+=======
+{
+  "@@locale": "en",
+  "appTitle": "word play",
+  "welcomeMessage": "Welcome to the game!",
+  "buttonLabel": "Click me"
+}
+>>>>>>> draft_local
