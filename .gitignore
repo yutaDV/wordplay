@@ -45,7 +45,7 @@ app.*.map.json
 
 
 # Виключити файли локалізації
-lib/generated/intl/*
-lib/generated/intl/messages_uk.dart
+lib/services/localizations/generated/intl/*
+lib/services/localizations/generated/intl/messages_uk.dart
 
 
