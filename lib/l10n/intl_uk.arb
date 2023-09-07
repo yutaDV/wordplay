@@ -2,5 +2,6 @@
   "@@locale": "uk",
   "appTitle": "Гра слів",
   "welcomeMessage": "вітаю!",
-  "buttonLabel": "Клікніть мене"
+  "buttonLabel": "Клікніть мене",
+  "hello": "Привіт"
 }
