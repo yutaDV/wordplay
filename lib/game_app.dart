@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:wordplay/services/localizations/generated/l10n.dart';
 import 'package:wordplay/themes/light_theme.dart';
+import 'generated/l10n.dart';
 
 class GameApp extends StatelessWidget {
   const GameApp({Key? key});
