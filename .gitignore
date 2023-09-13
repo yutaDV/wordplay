@@ -43,9 +43,8 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
+# Ігноруємо файли локалізації, які генеруються автоматично
+/lib/generated/
 
-# Виключити файли локалізації
-lib/services/localizations/generated/intl/*
-lib/services/localizations/generated/intl/messages_uk.dart
 
 
