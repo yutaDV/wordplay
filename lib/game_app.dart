@@ -19,7 +19,7 @@ class GameApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      locale: const Locale('uk'),
+      locale: const Locale('en'),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
