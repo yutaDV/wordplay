@@ -1,35 +1,37 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Word {
   final String id;
   final String word;
-  final String explanation;
   final String language;
   final int difficulty;
+  final String description;
 
   Word({
     required this.id,
     required this.word,
-    this.explanation = "",
-    this.language = "uk",
-    this.difficulty = 1,
+    required this.language,
+    required this.difficulty,
+    required this.description,
   });
 
-  factory Word.fromJson(Map<String, dynamic> json) {
+  factory Word.fromDocument(DocumentSnapshot doc) {
+    final data = doc.data() as Map<String, dynamic>;
     return Word(
-      id: json['id'],
-      word: json['word'],
-      explanation: json['explanation'] ?? "",
-      language: json['language'] ?? "uk",
-      difficulty: json['difficulty'] ?? 1,
+      id: doc.id,
+      word: data['word'] ?? '',
+      language: data['language'] ?? '',
+      difficulty: data['difficulty'] ?? 2,
+      description: data['description'] ?? '',
     );
   }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'word': word,
-      'explanation': explanation,
-      'language': language,
-      'difficulty': difficulty,
-    };
-  }
 }
+
+Word newWord = Word(
+  id: '',
+  word: 'світ',
+  language: 'uk',
+  difficulty: 1,
+  description: '',
+
+);
