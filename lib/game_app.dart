@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wordplay/themes/light_theme.dart';
+import 'package:wordplay/ui/constants/main_button.dart';
+import 'package:wordplay/repositories/word_repository.dart';
+import 'package:wordplay/models/word.dart';
 import 'generated/l10n.dart';
 
 class GameApp extends StatelessWidget {
@@ -20,19 +23,22 @@ class GameApp extends StatelessWidget {
       ],
       supportedLocales: S.delegate.supportedLocales,
       locale: const Locale('en'),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home:  MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title});
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
+  final WordRepository _wordRepository = WordRepository();
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
+
+
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
@@ -66,9 +72,11 @@ class _MyHomePageState extends State<MyHomePage> {
               'What is it?',
               style: Theme.of(context).textTheme.bodyLarge,
             ),
-            Text(
-              S.of(context).welcomeMessage,
-              style: Theme.of(context).textTheme.bodyLarge,
+            MainButton(
+              text: 'додати слово',
+              onPressed: () async {
+                widget._wordRepository.addWord(newWord);
+              },
             ),
             Text(
               S.of(context).hello,
@@ -76,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text(
               '$_counter',
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
           ],
         ),
