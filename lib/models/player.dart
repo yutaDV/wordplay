@@ -1,4 +1,5 @@
-import 'package:wordplay/Models/round.dart';
+
+import '../models/round.dart';
 
 class PlayerModel {
   String name;
@@ -14,7 +15,7 @@ class PlayerModel {
     required this.role,
     required this.playerStatus,
     required this.totalScore,
-    List<RoundModel>? rounds,
+    required List<RoundModel> rounds,
   }) : rounds = rounds ?? [];
 
   Map<String, dynamic> toMap() {
@@ -43,7 +44,8 @@ class PlayerModel {
       rounds: roundsList,
     );
   }
-  // Метод для створення першого гравця
+
+  // Метод для створення першого гравця з іменем і роллю
   factory PlayerModel.defaultPlayer({
     required String playerName,
     required String playerStatus,
@@ -61,7 +63,7 @@ class PlayerModel {
       role: 'active',
       totalScore: 0,
       rounds: [initialRound],
-      playerStatus: playerStatus,
+      playerStatus: playerStatus, // Додайте параметр playerStatus тут
     );
   }
 }

@@ -32,7 +32,6 @@ class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
-  final WordRepository _wordRepository = WordRepository();
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -42,6 +41,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  final WordRepository _wordRepository = WordRepository();
 
   void _incrementCounter() {
     setState(() {
@@ -73,9 +73,16 @@ class _MyHomePageState extends State<MyHomePage> {
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             MainButton(
-              text: 'додати слово',
+              text: S.of(context).addWord,
               onPressed: () async {
-                widget._wordRepository.addWord(newWord);
+                _wordRepository.addWord(newWord);
+              },
+            ),
+            SizedBox(height: 16),
+            MainButton(
+              text: S.of(context).startGame,
+              onPressed: () async {
+               // _wordRepository.addWord(newWord);
               },
             ),
             Text(

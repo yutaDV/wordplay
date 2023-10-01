@@ -3,5 +3,7 @@
   "appTitle": "Гра слів",
   "welcomeMessage": "вітаю!",
   "buttonLabel": "Клікніть мене",
-  "hello": "Привіт"
+  "hello": "Привіт",
+  "startGame": "почати нову гру",
+  "addWord": " додати нове слово"
 }

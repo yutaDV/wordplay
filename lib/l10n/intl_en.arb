@@ -3,5 +3,7 @@
   "appTitle": "word play",
   "welcomeMessage": "Welcome to the game!",
   "buttonLabel": "Click me",
-  "hello": "Hello"
+  "hello": "Hello",
+  "startGame": "start a new game",
+  "addWord": " add a new word"
 }
