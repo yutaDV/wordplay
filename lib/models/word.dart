@@ -29,7 +29,7 @@ class Word {
 
 Word newWord = Word(
   id: '',
-  word: 'рік',
+  word: 'вода',
   language: 'uk',
   difficulty: 1,
   description: '',

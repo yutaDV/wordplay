@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:wordplay/repositories/game_repository.dart';
 import 'package:wordplay/themes/light_theme.dart';
 import 'package:wordplay/ui/constants/main_button.dart';
 import 'package:wordplay/repositories/word_repository.dart';
@@ -42,6 +43,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   final WordRepository _wordRepository = WordRepository();
+  final GameRepository _gameRepository = GameRepository();
 
   void _incrementCounter() {
     setState(() {
@@ -82,7 +84,14 @@ class _MyHomePageState extends State<MyHomePage> {
             MainButton(
               text: S.of(context).startGame,
               onPressed: () async {
-               // _wordRepository.addWord(newWord);
+                _gameRepository.createGame('2222', 'gameType',  'Nino');
+              },
+            ),
+            SizedBox(height: 16),
+            MainButton(
+              text: S.of(context).joinGame,
+              onPressed: () async {
+                //_gameRepository.createGame('2222', 'gameType',  'Nino');
               },
             ),
             Text(

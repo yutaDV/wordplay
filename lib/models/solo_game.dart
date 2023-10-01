@@ -1,4 +1,4 @@
-import 'package:wordplay/Models/player.dart';
+import 'package:wordplay/models/player.dart';
 
 class GameModel {
   String? id; // Ідентифікатор гри (null, оскільки його створює база даних)
