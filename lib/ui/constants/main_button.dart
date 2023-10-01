@@ -19,7 +19,7 @@ class MainButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          primary: theme.primaryColor, // Використовуємо колір фону з теми
+          backgroundColor: theme.primaryColor, // Використовуємо колір фону з теми
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20.0),
           ),

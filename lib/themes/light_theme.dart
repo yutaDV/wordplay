@@ -23,9 +23,9 @@ final ThemeData lightTheme = ThemeData(
       fontFamily: 'Montserrat',
     ),
     bodyMedium: TextStyle(
-      color: Color(0xFFCDE4CC),
+      color: Color(0xFF0D3A2C),
       fontWeight: FontWeight.w500,
-      fontSize: 48,
+      fontSize: 24,
       fontFamily: 'Montserrat',
     ),
     labelSmall: TextStyle(

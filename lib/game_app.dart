@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wordplay/repositories/game_repository.dart';
 import 'package:wordplay/themes/light_theme.dart';
+import 'package:wordplay/ui/constants/data_input_dialog.dart';
 import 'package:wordplay/ui/constants/main_button.dart';
 import 'package:wordplay/repositories/word_repository.dart';
 import 'package:wordplay/models/word.dart';
@@ -50,6 +51,23 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter++;
     });
   }
+ // внести даний метод
+  void _showGameCodeDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return DataInputDialog(
+          title: S.of(context).dialogStartGame,
+          questions: [S.of(context).accessCode, S.of(context).yourName],
+          onDone: (List<String> answers) {
+            String gameCode = answers[0];
+            String playerName = answers[1];
+            _gameRepository.createGame(gameCode, 'gameType', playerName);
+          },
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,14 +102,14 @@ class _MyHomePageState extends State<MyHomePage> {
             MainButton(
               text: S.of(context).startGame,
               onPressed: () async {
-                _gameRepository.createGame('2222', 'gameType',  'Nino');
+                _showGameCodeDialog(context);
               },
             ),
             SizedBox(height: 16),
             MainButton(
               text: S.of(context).joinGame,
               onPressed: () async {
-                //_gameRepository.createGame('2222', 'gameType',  'Nino');
+                _gameRepository.addPlayerToGame('2222', 'варвара');
               },
             ),
             Text(
@@ -114,3 +132,5 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+
