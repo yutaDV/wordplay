@@ -3,8 +3,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wordplay/repositories/game_repository.dart';
 import 'package:wordplay/themes/light_theme.dart';
-import 'package:wordplay/ui/constants/data_input_dialog.dart';
-import 'package:wordplay/ui/constants/main_button.dart';
+import 'package:wordplay/ui/widget/data_input_dialog.dart';
+import 'package:wordplay/ui/widget/main_button.dart';
 import 'package:wordplay/repositories/word_repository.dart';
 import 'package:wordplay/models/word.dart';
 import 'generated/l10n.dart';
@@ -51,8 +51,8 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter++;
     });
   }
- // внести даний метод
-  void _showGameCodeDialog(BuildContext context) {
+  // перенести метод у контролер
+  void _newGameDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) {
@@ -63,6 +63,23 @@ class _MyHomePageState extends State<MyHomePage> {
             String gameCode = answers[0];
             String playerName = answers[1];
             _gameRepository.createGame(gameCode, 'gameType', playerName);
+          },
+        );
+      },
+    );
+  }
+
+  void _joinGameDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return DataInputDialog(
+          title: S.of(context).dialogJoinGame,
+          questions: [S.of(context).accessCode, S.of(context).yourName],
+          onDone: (List<String> answers) {
+            String gameCode = answers[0];
+            String playerName = answers[1];
+            _gameRepository.addPlayerToGame(gameCode,  playerName);
           },
         );
       },
@@ -102,14 +119,14 @@ class _MyHomePageState extends State<MyHomePage> {
             MainButton(
               text: S.of(context).startGame,
               onPressed: () async {
-                _showGameCodeDialog(context);
+                _newGameDialog(context);
               },
             ),
             SizedBox(height: 16),
             MainButton(
               text: S.of(context).joinGame,
               onPressed: () async {
-                _gameRepository.addPlayerToGame('2222', 'варвара');
+                _joinGameDialog(context);
               },
             ),
             Text(
@@ -132,5 +149,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
 

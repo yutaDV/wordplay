@@ -107,3 +107,29 @@ class _DataInputDialogState extends State<DataInputDialog> {
     );
   }
 }
+
+
+// кудись винести цей метод
+Future<void> _showGameCodeDialog(BuildContext context) async {
+  final result = await showDialog(
+    context: context,
+    builder: (context) {
+      return DataInputDialog(
+        title: S
+            .of(context)
+            .dialogStartGame,
+        questions: [S
+            .of(context)
+            .accessCode, S
+            .of(context)
+            .yourName
+        ],
+        onDone: (List<String> answers) {
+          String gameCode = answers[0];
+          String playerName = answers[1];
+          Navigator.of(context).pop(answers); // Повертаємо дані
+        },
+      );
+    },
+  );
+}

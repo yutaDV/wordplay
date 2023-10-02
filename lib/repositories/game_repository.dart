@@ -79,14 +79,14 @@ class GameRepository {
         final PlayerModel newPlayer = PlayerModel(
           name: playerName,
           playerNumber: maxPlayerNumber + 1, // Наступний порядковий номер
-          role: 'очікує',
-          playerStatus: 'інший',
+          role: 'waiting',
+          playerStatus: 'another',
           totalScore: 0,
           rounds: [
             RoundModel(
               roundNumber: 0,
-              correctWords: ['тут будуть коректні слова'],
-              incorrectWords: ['тут будуть некоректні слова'],
+              correctWords: [' коректні слова'],
+              incorrectWords: ['некоректні слова'],
               roundScore: 0,
             ),
           ],
