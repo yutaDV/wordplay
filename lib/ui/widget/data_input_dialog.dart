@@ -33,9 +33,9 @@ class _DataInputDialogState extends State<DataInputDialog> {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     return Dialog(
-      backgroundColor: theme.scaffoldBackgroundColor, // Колір фону діалогового вікна
+      backgroundColor: theme.scaffoldBackgroundColor,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.0), // Коло в кутах діалога
+        borderRadius: BorderRadius.circular(16.0),
       ),
       child: Stack(
         children: [
@@ -55,7 +55,7 @@ class _DataInputDialogState extends State<DataInputDialog> {
                   padding: const EdgeInsets.all(16.0),
                   child: TextField(
                     controller: controllers[i],
-                    style: theme.textTheme.bodyMedium,
+                    style: theme.textTheme.bodyLarge,
                     decoration: InputDecoration(
                       labelText: widget.questions[i],
                       labelStyle: TextStyle(color: Colors.black12), // Колір тексту мітки
@@ -78,10 +78,6 @@ class _DataInputDialogState extends State<DataInputDialog> {
                     },
                     child: Text(
                         S.of(context).ok,
-                        style: theme.textTheme.labelSmall
-                    ),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(theme.primaryColor),
                     ),
                   ),
                 ),
@@ -95,7 +91,6 @@ class _DataInputDialogState extends State<DataInputDialog> {
             child: IconButton(
               icon: Icon(
                 Icons.close,
-                color: theme.primaryColor,
               ),
               onPressed: () {
                 Navigator.of(context).pop();

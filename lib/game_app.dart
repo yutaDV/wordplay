@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wordplay/repositories/game_repository.dart';
-import 'package:wordplay/themes/light_theme.dart';
-import 'package:wordplay/ui/widget/data_input_dialog.dart';
+import 'package:wordplay/themes/theme.dart';
 import 'package:wordplay/ui/widget/main_button.dart';
 import 'package:wordplay/repositories/word_repository.dart';
 import 'package:wordplay/models/word.dart';
-import 'dialog/join_game_dialog.dart';
-import 'dialog/new_game_dialog.dart';
+import 'dialogs/join_game_dialog.dart';
+import 'dialogs/new_game_dialog.dart';
 import 'generated/l10n.dart';
 
 class GameApp extends StatelessWidget {
@@ -18,7 +17,7 @@ class GameApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: lightTheme,
+      theme: AppThemes.lightTheme,
       localizationsDelegates: const [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -60,7 +59,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: lightTheme.appBarTheme.backgroundColor,
         title: Text(S.of(context).appTitle),
       ),
       body: Center(
@@ -77,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text(
               'What is it?',
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             MainButton(
               text: S.of(context).addWord,
@@ -101,11 +99,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text(
               S.of(context).hello,
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
             Text(
               '$_counter',
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           ],
         ),
@@ -114,7 +112,6 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
-        backgroundColor: Theme.of(context).primaryColor,
       ),
     );
   }
