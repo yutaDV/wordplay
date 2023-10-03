@@ -5,7 +5,7 @@ import '../models/word.dart';
 class WordRepository {
   final CollectionReference wordsCollection =
   FirebaseFirestore.instance.collection('words');
-
+//переробити
   Future<List<Word>> getWords({String? language, int? difficulty}) async {
     try {
       Query query = wordsCollection;

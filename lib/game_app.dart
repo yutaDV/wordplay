@@ -7,6 +7,8 @@ import 'package:wordplay/ui/widget/data_input_dialog.dart';
 import 'package:wordplay/ui/widget/main_button.dart';
 import 'package:wordplay/repositories/word_repository.dart';
 import 'package:wordplay/models/word.dart';
+import 'dialog/join_game_dialog.dart';
+import 'dialog/new_game_dialog.dart';
 import 'generated/l10n.dart';
 
 class GameApp extends StatelessWidget {
@@ -51,40 +53,8 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter++;
     });
   }
-  // перенести метод у контролер
-  void _newGameDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return DataInputDialog(
-          title: S.of(context).dialogStartGame,
-          questions: [S.of(context).accessCode, S.of(context).yourName],
-          onDone: (List<String> answers) {
-            String gameCode = answers[0];
-            String playerName = answers[1];
-            _gameRepository.createGame(gameCode, 'gameType', playerName);
-          },
-        );
-      },
-    );
-  }
 
-  void _joinGameDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return DataInputDialog(
-          title: S.of(context).dialogJoinGame,
-          questions: [S.of(context).accessCode, S.of(context).yourName],
-          onDone: (List<String> answers) {
-            String gameCode = answers[0];
-            String playerName = answers[1];
-            _gameRepository.addPlayerToGame(gameCode,  playerName);
-          },
-        );
-      },
-    );
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -119,14 +89,14 @@ class _MyHomePageState extends State<MyHomePage> {
             MainButton(
               text: S.of(context).startGame,
               onPressed: () async {
-                _newGameDialog(context);
+                newGameDialog(context, _gameRepository);
               },
             ),
             SizedBox(height: 16),
             MainButton(
               text: S.of(context).joinGame,
               onPressed: () async {
-                _joinGameDialog(context);
+                joinGameDialog(context, _gameRepository);
               },
             ),
             Text(
