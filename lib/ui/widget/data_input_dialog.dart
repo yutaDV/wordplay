@@ -7,7 +7,7 @@ class DataInputDialog extends StatefulWidget {
   final List<String> questions;
   final Function(List<String>) onDone;
 
-  DataInputDialog({
+  DataInputDialog({super.key,
     required this.title,
     required this.questions,
     required this.onDone,
@@ -42,7 +42,7 @@ class _DataInputDialogState extends State<DataInputDialog> {
           Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
@@ -58,11 +58,11 @@ class _DataInputDialogState extends State<DataInputDialog> {
                     style: theme.textTheme.bodyLarge,
                     decoration: InputDecoration(
                       labelText: widget.questions[i],
-                      labelStyle: TextStyle(color: Colors.black12), // Колір тексту мітки
+                      labelStyle: theme.textTheme.bodySmall?.copyWith(color: theme.dividerColor),// Колір тексту мітки
                     ),
                   ),
                 ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Align(
                 alignment: Alignment.centerRight,
                 child: Padding(
@@ -78,6 +78,7 @@ class _DataInputDialogState extends State<DataInputDialog> {
                     },
                     child: Text(
                         S.of(context).ok,
+                      style: theme.textTheme.titleMedium,
                     ),
                   ),
                 ),
@@ -89,8 +90,9 @@ class _DataInputDialogState extends State<DataInputDialog> {
             top: 0,
             right: 0,
             child: IconButton(
-              icon: Icon(
+              icon:  Icon(
                 Icons.close,
+                color: theme.highlightColor,
               ),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -104,27 +106,3 @@ class _DataInputDialogState extends State<DataInputDialog> {
 }
 
 
-// кудись винести цей метод
-Future<void> _showGameCodeDialog(BuildContext context) async {
-  final result = await showDialog(
-    context: context,
-    builder: (context) {
-      return DataInputDialog(
-        title: S
-            .of(context)
-            .dialogStartGame,
-        questions: [S
-            .of(context)
-            .accessCode, S
-            .of(context)
-            .yourName
-        ],
-        onDone: (List<String> answers) {
-          String gameCode = answers[0];
-          String playerName = answers[1];
-          Navigator.of(context).pop(answers); // Повертаємо дані
-        },
-      );
-    },
-  );
-}

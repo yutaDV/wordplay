@@ -17,7 +17,7 @@ class GameApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: AppThemes.lightTheme,
+      theme: AppThemes.darkTheme,
       localizationsDelegates: const [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -25,7 +25,7 @@ class GameApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      locale: const Locale('en'),
+      locale: const Locale('uk'),
       home:  MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
