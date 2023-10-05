@@ -26,7 +26,7 @@ class MainButton extends StatelessWidget {
         child: Center(
           child: Text(
             text,
-            style: theme.textTheme.titleMedium,
+            style: theme.textTheme.labelLarge,
           ),
         ),
       ),

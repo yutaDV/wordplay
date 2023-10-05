@@ -7,13 +7,12 @@ class AppThemes {
   // Constants color range for light theme
   static const Color _lightPrimaryColor = Color(0xFF0D3A2C);
   static const Color _lightBackgroundColor = Color(0xFFCDE4CC);
-  static const Color _lightButtonTextColor = Color(0xFFCDE4CC);
-  static const Color _lightButtonPrimaryColor = Color(0xFF0D3A2C);
-  static const Color _lightAppBarColor = Color(0xFFCDE4CC);
+  //static const Color _lightButtonTextColor = Color(0xFFCDE4CC);
+ // static const Color _lightButtonPrimaryColor = Color(0xFF0D3A2C);
+//  static const Color _lightAppBarColor = Color(0xFFCDE4CC);
   static const Color _lightDividerColor = Color(0xC391A490);
 
-  static const Color _lightIconColor = Color(0xFFCDE4CC);
-  static  Color _lightErrorColor = Color(0xFFA80B1C);// в подальшому використати для помилок
+  //static const Color _lightIconColor = Color(0xFFCDE4CC);
 
   // Text theme for light theme
   static const TextStyle _lightWelcomeTextStyle = TextStyle(
@@ -27,10 +26,11 @@ class AppThemes {
     color: _lightPrimaryColor,
     fontWeight: FontWeight.w700,
   );
+
   static const TextStyle _lightButtonTextStyle = TextStyle(
     fontSize: 24.0,
     fontWeight: FontWeight.w500,
-    color: _lightButtonTextColor,
+    color: _lightBackgroundColor,
   );
 
   static const TextStyle _lightMediumTextStyle = TextStyle(
@@ -40,10 +40,13 @@ class AppThemes {
   );
 
   static  const TextTheme _lightTextTheme = TextTheme(
-    titleLarge: _lightWelcomeTextStyle,
-    bodyMedium: _lightMediumTextStyle,
-    bodySmall: _lightAppBarTextStyle,
-    titleMedium: _lightButtonTextStyle,
+    titleLarge: TextStyle(fontSize: 48.0, fontWeight: FontWeight.w900, color: _lightPrimaryColor,  letterSpacing: 1, height: 1.3,),
+    titleMedium: TextStyle(fontSize: 26.0, fontWeight: FontWeight.w500,  color: _lightPrimaryColor,  letterSpacing: 0.5, height: 1.2,),
+    titleSmall: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w300, color: _lightPrimaryColor,  letterSpacing: 0.2, height: 1.1,),
+    labelLarge: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w900, color: _lightBackgroundColor,  letterSpacing: 1, height: 1.3,),
+    labelMedium: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500, color: _lightBackgroundColor,  letterSpacing: 0.5, height: 1.2,),
+    labelSmall: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w300, color: _lightBackgroundColor,  letterSpacing: 0.2, height: 1.1,),
+
   );
 
   // Constants color range for dark theme
@@ -97,21 +100,21 @@ class AppThemes {
     scaffoldBackgroundColor: _lightBackgroundColor,
     dividerColor: _lightDividerColor,
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      backgroundColor: _lightButtonPrimaryColor,
-      foregroundColor: _lightIconColor,
+      backgroundColor: _lightPrimaryColor,
+      foregroundColor: _lightBackgroundColor,
     ),
-    appBarTheme: AppBarTheme(
-      color: _lightAppBarColor,
-      iconTheme: const IconThemeData(color: _lightPrimaryColor),
-      toolbarTextStyle: _lightTextTheme.bodySmall,
-      titleTextStyle: _lightTextTheme.bodySmall,
+    appBarTheme: const AppBarTheme(
+      color: _lightBackgroundColor,
+      iconTheme: IconThemeData(color: _lightPrimaryColor),
+      toolbarTextStyle: _lightAppBarTextStyle,
+      titleTextStyle: _lightAppBarTextStyle,
     ),
     colorScheme: const ColorScheme.light(
       primary: _lightPrimaryColor,
       secondary: _lightBackgroundColor,
     ),
     buttonTheme: const ButtonThemeData(
-      buttonColor: _lightButtonPrimaryColor,
+      buttonColor: _lightPrimaryColor,
       textTheme: ButtonTextTheme.primary,
     ),
     textTheme: _lightTextTheme,

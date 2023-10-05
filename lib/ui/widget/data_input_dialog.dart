@@ -47,7 +47,7 @@ class _DataInputDialogState extends State<DataInputDialog> {
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
                   widget.title,
-                  style: theme.textTheme.bodyMedium,
+                  style: theme.textTheme.titleMedium,
                 ),
               ),
               for (int i = 0; i < widget.questions.length; i++)
@@ -55,10 +55,10 @@ class _DataInputDialogState extends State<DataInputDialog> {
                   padding: const EdgeInsets.all(16.0),
                   child: TextField(
                     controller: controllers[i],
-                    style: theme.textTheme.bodyLarge,
+                    style: theme.textTheme.titleMedium,
                     decoration: InputDecoration(
                       labelText: widget.questions[i],
-                      labelStyle: theme.textTheme.bodySmall?.copyWith(color: theme.dividerColor),// Колір тексту мітки
+                      labelStyle: theme.textTheme.titleSmall?.copyWith(color: theme.dividerColor),// Колір тексту мітки
                     ),
                   ),
                 ),
@@ -78,7 +78,7 @@ class _DataInputDialogState extends State<DataInputDialog> {
                     },
                     child: Text(
                         S.of(context).ok,
-                      style: theme.textTheme.titleMedium,
+                      style: theme.textTheme.labelMedium,
                     ),
                   ),
                 ),
