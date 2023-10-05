@@ -17,7 +17,7 @@ class GameApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: AppThemes.lightTheme,
+      theme: AppThemes.darkTheme,
       localizationsDelegates: const [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -25,7 +25,7 @@ class GameApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      locale: const Locale('uk'),
+      locale: const Locale('en'),
       home:  MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -40,8 +40,6 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-
-
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   final WordRepository _wordRepository = WordRepository();
@@ -52,8 +50,6 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter++;
     });
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 newGameDialog(context, _gameRepository);
               },
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             MainButton(
               text: S.of(context).joinGame,
               onPressed: () async {
