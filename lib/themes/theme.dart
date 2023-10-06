@@ -7,6 +7,7 @@ class AppThemes {
   // Constants color range for light theme
   static const Color _lightPrimaryColor = Color(0xFF0D3A2C);
   static const Color _lightBackgroundColor = Color(0xFFCDE4CC);
+  static const Color _lightFocusColor = Color(0xFF07FAA6);
   static const Color _lightDividerColor = Color(0xC391A490);
 
 
@@ -29,7 +30,9 @@ class AppThemes {
   // The light theme
   static final ThemeData lightTheme = ThemeData(
     fontFamily: FontFamily.productSans,
+    primaryColor: _lightPrimaryColor,
     highlightColor: _lightPrimaryColor,
+    focusColor: _lightFocusColor,
     scaffoldBackgroundColor: _lightBackgroundColor,
     dividerColor: _lightDividerColor,
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
@@ -55,6 +58,7 @@ class AppThemes {
 
   // Constants color range for dark theme
   static const Color _darkPrimaryColor = Color(0xFF6BD8B6);
+  static const Color _darkFocusColor = Color(0xFF03AD76);
   static const Color _darkBackgroundColor = Color(0xFF0D3A2C);
   static const Color _darkDividerColor = Color(0xA091A490);
 
@@ -78,8 +82,10 @@ class AppThemes {
   // The dark theme
   static final ThemeData darkTheme = ThemeData(
     fontFamily: FontFamily.productSans,
+    primaryColor: _darkPrimaryColor,
     scaffoldBackgroundColor: _darkBackgroundColor,
     dividerColor: _darkDividerColor,
+    focusColor: _darkFocusColor,
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: _darkPrimaryColor,
       foregroundColor: _darkBackgroundColor,
