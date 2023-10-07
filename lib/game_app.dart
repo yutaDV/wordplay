@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wordplay/repositories/game_repository.dart';
 import 'package:wordplay/themes/theme.dart';
+import 'package:wordplay/ui/widget/logo.dart';
 import 'package:wordplay/ui/widget/main_button.dart';
 import 'package:wordplay/repositories/word_repository.dart';
 import 'package:wordplay/models/word.dart';
@@ -17,7 +17,7 @@ class GameApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: AppThemes.lightTheme,
+      theme: AppThemes.darkTheme,
       localizationsDelegates: const [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -61,13 +61,14 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SvgPicture.asset(
-              'assets/logo/logo_d.svg',
-              width: 120,
+            Logo(
+              size: 100.0,
+              theme: Theme.of(context),
             ),
-            SvgPicture.asset(
-              'assets/logo/logo_l.svg',
-              width: 60,
+
+            Logo(
+              size: 100.0,
+              theme: Theme.of(context),
             ),
             Text(
               'What is it?',
@@ -79,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 _wordRepository.addWord(newWord);
               },
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             MainButton(
               text: S.of(context).startGame,
               onPressed: () async {
