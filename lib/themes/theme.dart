@@ -5,9 +5,6 @@ class AppThemes {
   AppThemes._();
 
   static const Color _ErrorColor = Color(0xFF880719);
-  static const String _lightLogoAsset = 'assets/logo/logo_l.svg';
-  static const String _darkLogoAsset = 'assets/logo/logo_d.svg';
-
 
   // Constants color range for light theme
   static const Color _lightPrimaryColor = Color(0xFF0D3A2C);
@@ -120,6 +117,4 @@ class AppThemes {
       textTheme: ButtonTextTheme.primary,
     ),
   );
-
-
 }

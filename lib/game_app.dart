@@ -20,7 +20,7 @@ class GameApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: AppThemes.lightTheme,
       darkTheme: AppThemes.darkTheme,
-      themeMode: ThemeMode.light, //ThemeMode.system, Або ThemeMode.dark, Або ThemeMode.light
+      themeMode: ThemeMode.dark, //ThemeMode.system, Або ThemeMode.dark, Або ThemeMode.light
       localizationsDelegates: const [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -54,7 +54,6 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,8 +65,6 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Logo(size: 40.0,),
-
             const Logo(size: 100.0,),
             Text(
               'What is it?',
