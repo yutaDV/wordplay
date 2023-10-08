@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:wordplay/repositories/game_repository.dart';
 import 'package:wordplay/themes/theme.dart';
+import 'package:wordplay/ui/widget/app_bar.dart';
 import 'package:wordplay/ui/widget/logo.dart';
 import 'package:wordplay/ui/widget/main_button.dart';
 import 'package:wordplay/repositories/word_repository.dart';
@@ -17,7 +18,9 @@ class GameApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: AppThemes.darkTheme,
+      theme: AppThemes.lightTheme,
+      darkTheme: AppThemes.darkTheme,
+      themeMode: ThemeMode.light, //ThemeMode.system, Або ThemeMode.dark, Або ThemeMode.light
       localizationsDelegates: const [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -51,25 +54,21 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(S.of(context).appTitle),
-      ),
+      appBar:  MyAppBar(
+      pageTitle: S.of(context).menu,
+      showBackButton: true, // Якщо потрібно показати кнопку "назад"
+    ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Logo(
-              size: 100.0,
-              theme: Theme.of(context),
-            ),
+            const Logo(size: 40.0,),
 
-            Logo(
-              size: 100.0,
-              theme: Theme.of(context),
-            ),
+            const Logo(size: 100.0,),
             Text(
               'What is it?',
               style: Theme.of(context).textTheme.titleLarge,

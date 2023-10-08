@@ -11,16 +11,16 @@ class MainButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context); // Отримуємо поточну тему
+    final ThemeData theme = Theme.of(context);
 
     return Container(
-      width: 320.0, // Фіксована ширина кнопки
-      height: 50.0, // Фіксована висота кнопки
+      width: 320.0,
+      height: 50.0,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
-          colors: [theme.primaryColor, theme.focusColor], // Змініть ці кольори на свої уподобання
+          colors: [theme.primaryColor, theme.focusColor],
         ),
         borderRadius: BorderRadius.circular(20.0),
       ),
@@ -35,6 +35,7 @@ class MainButton extends StatelessWidget {
         child: Center(
           child: Text(
             text,
+            style: Theme.of(context).textTheme.labelLarge,
             ),
           ),
         ),

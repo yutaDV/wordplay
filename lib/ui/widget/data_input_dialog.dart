@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../../generated/l10n.dart';
+import 'logo.dart';
 
 class DataInputDialog extends StatefulWidget {
   final String title;
   final List<String> questions;
   final Function(List<String>) onDone;
 
-  DataInputDialog({super.key,
+  const DataInputDialog({super.key,
     required this.title,
     required this.questions,
     required this.onDone,
@@ -66,7 +67,7 @@ class _DataInputDialogState extends State<DataInputDialog> {
               Align(
                 alignment: Alignment.centerRight,
                 child: Padding(
-                  padding: const EdgeInsets.only(right: 16.0), // Відступ з правого краю
+                  padding: const EdgeInsets.only(right: 16.0),
                   child: ElevatedButton(
                     onPressed: () {
                       List<String> answers = [];
@@ -98,6 +99,11 @@ class _DataInputDialogState extends State<DataInputDialog> {
                 Navigator.of(context).pop();
               },
             ),
+          ),
+          const Positioned(
+            bottom: 10,
+            left: 20,
+            child: Logo(size: 50.00),
           ),
         ],
       ),
