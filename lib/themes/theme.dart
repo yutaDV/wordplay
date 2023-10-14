@@ -4,7 +4,7 @@ import 'font_family.dart';
 class AppThemes {
   AppThemes._();
 
-  static const Color _ErrorColor = Color(0xFF880719);
+  static const Color _ErrorColor = Color(0xFFC0021B);
 
   // Constants color range for light theme
   static const Color _lightPrimaryColor = Color(0xFF0D3A2C);

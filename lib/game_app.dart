@@ -4,10 +4,9 @@ import 'package:wordplay/repositories/game_repository.dart';
 import 'package:wordplay/themes/theme.dart';
 import 'package:wordplay/ui/widget/app_bar.dart';
 import 'package:wordplay/ui/widget/logo.dart';
-import 'package:wordplay/ui/widget/lottie_animation.dart';
 import 'package:wordplay/ui/widget/main_button.dart';
 import 'package:wordplay/repositories/word_repository.dart';
-import 'package:wordplay/models/word.dart';
+import 'package:wordplay/ui/widget/timer.dart';
 import 'dialogs/add_word_dialog.dart';
 import 'dialogs/join_game_dialog.dart';
 import 'dialogs/new_game_dialog.dart';
@@ -30,7 +29,7 @@ class GameApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      locale: const Locale('uk'),
+      locale: const Locale('en'),
       home:  MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -100,8 +99,15 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.titleSmall,
             ),
-            SizedBox(height: 20),
-            LottieAnimation(),
+            const SizedBox(height: 10),
+            CountDownTimer(initialTime: 15),
+            const SizedBox(height: 10),
+            CountDownTimer(
+              initialTime: 20, // Час у секундах
+              circleSize: 80.0, // Розмір кола
+              textSize: 36.0, // Розмір тексту
+              showCircle: true, // Показувати коло
+            ),
           ],
         ),
       ),
