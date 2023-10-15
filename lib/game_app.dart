@@ -7,6 +7,7 @@ import 'package:wordplay/ui/widget/logo.dart';
 import 'package:wordplay/ui/widget/main_button.dart';
 import 'package:wordplay/repositories/word_repository.dart';
 import 'package:wordplay/ui/widget/timer.dart';
+import 'controllers/theme_controler.dart';
 import 'dialogs/add_word_dialog.dart';
 import 'dialogs/join_game_dialog.dart';
 import 'dialogs/new_game_dialog.dart';
@@ -20,8 +21,9 @@ class GameApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: AppThemes.lightTheme,
+      //theme: ThemeController.getTheme(),
       darkTheme: AppThemes.darkTheme,
-      themeMode: ThemeMode.dark, //ThemeMode.system, Або ThemeMode.dark, Або ThemeMode.light
+      themeMode: ThemeMode.light, //ThemeMode.system, Або ThemeMode.dark, Або ThemeMode.light
       localizationsDelegates: const [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -106,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
               initialTime: 20, // Час у секундах
               circleSize: 80.0, // Розмір кола
               textSize: 36.0, // Розмір тексту
-              showCircle: true, // Показувати коло
+              showCircle: false, // Показувати коло
             ),
           ],
         ),

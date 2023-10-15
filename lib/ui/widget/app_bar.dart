@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'burger_menu.dart';
 import 'logo.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -40,7 +41,12 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         IconButton(
           icon: const Icon(Icons.menu),
           onPressed: () {
-            // Дії для бургер-меню
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return BurgerMenu(); // Виклик бургер-меню
+              },
+            );
           },
         ),
       ],

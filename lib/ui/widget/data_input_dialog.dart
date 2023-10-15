@@ -93,7 +93,7 @@ class _DataInputDialogState extends State<DataInputDialog> {
             child: IconButton(
               icon:  Icon(
                 Icons.close,
-                color: theme.highlightColor,
+                color: theme.primaryColor,
               ),
               onPressed: () {
                 Navigator.of(context).pop();

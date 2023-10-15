@@ -15,6 +15,10 @@
   "menu": "Menu",
   "dialogAddWord": "Enter the word you want to add its language and difficulty",
   "word": "Word",
-  "language": "Language (uk or en)",
-  "difficulty": "Difficulty (1, 2 or 3)"
+  "language": "Language",
+  "difficulty": "Difficulty (1, 2 or 3)",
+  "rules": "Rules of the game",
+  "theme": "Theme",
+  "dark": "Dark",
+  "light": "Light"
 }
