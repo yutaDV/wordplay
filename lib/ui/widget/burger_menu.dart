@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../controllers/theme_controler.dart';
+import '../../controllers/theme_controller.dart';
 import '../../generated/l10n.dart';
 import 'logo.dart';
 
@@ -61,20 +61,24 @@ class _BurgerMenuState extends State<BurgerMenu> {
                   Text('English'),
                 ],
                 onPressed: (int index) {
-                  // Handle button tap
+                  if (index == 0) {
+                    ThemeController.changeLocale(const Locale('uk'));
+                  } else {
+                    ThemeController.changeLocale(const Locale('en'));
+                  }
                 },
               ),
             ),
             const SizedBox(height: 16),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Text(S.of(context).theme, style: theme.textTheme.titleMedium),
             ),
             const SizedBox(height: 10),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: ToggleButtons(
-                isSelected: [ThemeController.isDarkTheme, !ThemeController.isDarkTheme], // Приклад вибору, використовуйте власну логіку
+                isSelected: [ThemeController.isDarkTheme, !ThemeController.isDarkTheme],
                 children: [
                   Text(S.of(context).dark),
                   Text(S.of(context).light),

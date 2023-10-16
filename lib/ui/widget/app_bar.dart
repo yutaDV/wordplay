@@ -44,7 +44,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             showDialog(
               context: context,
               builder: (BuildContext context) {
-                return BurgerMenu(); // Виклик бургер-меню
+                return const BurgerMenu();
               },
             );
           },

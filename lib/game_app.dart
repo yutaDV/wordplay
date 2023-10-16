@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+
 import 'package:wordplay/repositories/game_repository.dart';
 import 'package:wordplay/themes/theme.dart';
 import 'package:wordplay/ui/widget/app_bar.dart';
@@ -7,7 +8,7 @@ import 'package:wordplay/ui/widget/logo.dart';
 import 'package:wordplay/ui/widget/main_button.dart';
 import 'package:wordplay/repositories/word_repository.dart';
 import 'package:wordplay/ui/widget/timer.dart';
-import 'controllers/theme_controler.dart';
+import 'controllers/theme_controller.dart';
 import 'dialogs/add_word_dialog.dart';
 import 'dialogs/join_game_dialog.dart';
 import 'dialogs/new_game_dialog.dart';
@@ -20,21 +21,26 @@ class GameApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: ThemeController.themeNotifier,
-      builder: (context, value, child) {
-        return MaterialApp(
-          title: 'Flutter Demo',
-          theme: value ? AppThemes.darkTheme : AppThemes.lightTheme,
-          darkTheme: AppThemes.darkTheme,
-          themeMode: value ? ThemeMode.dark : ThemeMode.light,
-          localizationsDelegates: const [
-            S.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: S.delegate.supportedLocales,
-          locale: const Locale('en'),
-          home:  MyHomePage(title: 'Flutter Demo Home Page'),
+      builder: (context, themeValue, child) {
+        return ValueListenableBuilder(
+          valueListenable: ThemeController.localeNotifier,
+          builder: (context, localeValue, child) {
+            return MaterialApp(
+              title: 'Flutter Demo',
+              theme: themeValue ? AppThemes.darkTheme : AppThemes.lightTheme,
+              darkTheme: AppThemes.darkTheme,
+              themeMode: themeValue ? ThemeMode.dark : ThemeMode.light,
+              localizationsDelegates: const [
+                S.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: S.delegate.supportedLocales,
+              locale: localeValue,
+              home: MyHomePage(title: 'Flutter Demo Home Page'),
+            );
+          },
         );
       },
     );
@@ -67,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar:  MyAppBar(
       pageTitle: S.of(context).menu,
-      showBackButton: true, // Якщо потрібно показати кнопку "назад"
+      showBackButton: true,
     ),
       body: Center(
         child: Column(
