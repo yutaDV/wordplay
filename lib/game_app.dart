@@ -18,24 +18,29 @@ class GameApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: AppThemes.lightTheme,
-      //theme: ThemeController.getTheme(),
-      darkTheme: AppThemes.darkTheme,
-      themeMode: ThemeMode.light, //ThemeMode.system, Або ThemeMode.dark, Або ThemeMode.light
-      localizationsDelegates: const [
-        S.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: S.delegate.supportedLocales,
-      locale: const Locale('en'),
-      home:  MyHomePage(title: 'Flutter Demo Home Page'),
+    return ValueListenableBuilder(
+      valueListenable: ThemeController.themeNotifier,
+      builder: (context, value, child) {
+        return MaterialApp(
+          title: 'Flutter Demo',
+          theme: value ? AppThemes.darkTheme : AppThemes.lightTheme,
+          darkTheme: AppThemes.darkTheme,
+          themeMode: value ? ThemeMode.dark : ThemeMode.light,
+          localizationsDelegates: const [
+            S.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: S.delegate.supportedLocales,
+          locale: const Locale('en'),
+          home:  MyHomePage(title: 'Flutter Demo Home Page'),
+        );
+      },
     );
   }
 }
+
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, required this.title}) : super(key: key);

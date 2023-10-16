@@ -3,16 +3,21 @@ import '../../controllers/theme_controler.dart';
 import '../../generated/l10n.dart';
 import 'logo.dart';
 
-class BurgerMenu extends StatelessWidget {
-  const BurgerMenu({Key? key});
+class BurgerMenu extends StatefulWidget {
+  const BurgerMenu({Key? key}) : super(key: key);
 
+  @override
+  _BurgerMenuState createState() => _BurgerMenuState();
+}
+
+class _BurgerMenuState extends State<BurgerMenu> {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     return Dialog(
       backgroundColor: theme.scaffoldBackgroundColor,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(16.0),
       ),
       alignment: Alignment.topCenter,
       child: Container(
@@ -44,8 +49,7 @@ class BurgerMenu extends StatelessWidget {
             const SizedBox(height: 16),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Text(S.of(context).language,
-                  style: theme.textTheme.titleMedium),
+              child: Text(S.of(context).language, style: theme.textTheme.titleMedium),
             ),
             const SizedBox(height: 10),
             Padding(
@@ -62,10 +66,9 @@ class BurgerMenu extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-             Padding(
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Text(S.of(context).theme,
-                  style: theme.textTheme.titleMedium),
+              child: Text(S.of(context).theme, style: theme.textTheme.titleMedium),
             ),
             const SizedBox(height: 10),
             Padding(
@@ -73,25 +76,26 @@ class BurgerMenu extends StatelessWidget {
               child: ToggleButtons(
                 isSelected: [ThemeController.isDarkTheme, !ThemeController.isDarkTheme], // Приклад вибору, використовуйте власну логіку
                 children: [
-                  Text(S.of(context).dark), // Виклик локалізованого тексту "Темна"
-                  Text(S.of(context).light), // Виклик локалізованого тексту "Світла"
+                  Text(S.of(context).dark),
+                  Text(S.of(context).light),
                 ],
                 onPressed: (int index) {
-                  ThemeController.switchTheme(); // Виклик функції зміни теми
+                  setState(() {
+                    ThemeController.switchTheme(); // Оновлення теми за допомогою контролера теми
+                  });
                 },
               ),
             ),
-
             const SizedBox(height: 16),
             Padding(
               padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
               child: TextButton(
                 onPressed: () {
-                  //Правила
+                  // Правила
                 },
                 child: Text(
-                    S.of(context).rules,
-                    style: theme.textTheme.titleMedium?.copyWith(decoration: TextDecoration.underline)
+                  S.of(context).rules,
+                  style: theme.textTheme.titleMedium?.copyWith(decoration: TextDecoration.underline),
                 ),
               ),
             ),
