@@ -8,7 +8,10 @@ class GameRepository {
   FirebaseFirestore.instance.collection('games');
 
   Future<String> createGame(
-      String accessCode, String gameType, String firstPlayerName) async {
+      String accessCode,
+      String gameType,
+      String firstPlayerName,
+      ) async {
     try {
       final newGame = GameModel(
         status: 'New',
@@ -21,6 +24,13 @@ class GameRepository {
           ),
         ],
         round: 0, // Початковий раунд
+        winner: null, // Переможець
+        words: [], // Список слів
+        language: 'українська', // Мова за замовчуванням українська
+        difficulty: 'medium', // Складність за замовчуванням середня
+        roundTime: 60, // Час раунду за замовчуванням 60 секунд
+        winWordThreshold: 50, // Визначення переможця за кількістю слів за замовчуванням 50
+        winAttemptThreshold: 0, // Визначення переможця за кількістю ігрових кіл за замовчуванням 0
       );
 
       final DocumentReference gameDocRef = await gamesCollection.add({
@@ -28,6 +38,13 @@ class GameRepository {
         'accessCode': newGame.accessCode,
         'gameType': newGame.gameType,
         'round': newGame.round,
+        'winner': newGame.winner,
+        'words': newGame.words,
+        'language': newGame.language,
+        'difficulty': newGame.difficulty,
+        'roundTime': newGame.roundTime,
+        'winWordThreshold': newGame.winWordThreshold,
+        'winAttemptThreshold': newGame.winAttemptThreshold,
         'players': newGame.players
             .map((player) => {
           'name': player.name,
@@ -38,8 +55,8 @@ class GameRepository {
           'rounds': player.rounds
               .map((round) => {
             'roundNumber': round.roundNumber,
-            'correctWords': ['тут будуть коректні слова'],
-            'incorrectWords': ['тут будуть некоректні слова'],
+            'correctWords': round.correctWords,
+            'incorrectWords': round.incorrectWords,
             'roundScore': round.roundScore,
           })
               .toList(),
@@ -106,7 +123,4 @@ class GameRepository {
       throw Exception('Помилка під час додавання гравця до гри: $e');
     }
   }
-
-
-// Додайте інші методи для оновлення, видалення і іншої роботи з грою за потреби
 }
