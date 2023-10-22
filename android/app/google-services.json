@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "340569211116",
+    "project_id": "wordplay-6fd2a",
+    "storage_bucket": "wordplay-6fd2a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:340569211116:android:073e8512ecf4652c7ca5c9",
+        "android_client_info": {
+          "package_name": "com.example.fire_base_test"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDT_QAaUN-C80_pmJysfR9niy2UzSo7DMs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:340569211116:android:c3fddc9911ce1d977ca5c9",
+        "android_client_info": {
+          "package_name": "com.example.wordplay"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDT_QAaUN-C80_pmJysfR9niy2UzSo7DMs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

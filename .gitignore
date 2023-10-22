@@ -46,5 +46,7 @@ app.*.map.json
 # Ігноруємо файли локалізації, які генеруються автоматично
 /lib/generated/
 
+# Ігнорувати файли firebase_options.dart
+firebase_options.dart
 
 

@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:wordplay/themes/light_theme.dart';
+
+import 'package:wordplay/repositories/game_repository.dart';
+import 'package:wordplay/themes/theme.dart';
+import 'package:wordplay/ui/widget/app_bar.dart';
+import 'package:wordplay/ui/widget/logo.dart';
+import 'package:wordplay/ui/widget/main_button.dart';
+import 'package:wordplay/repositories/word_repository.dart';
+import 'package:wordplay/ui/widget/timer.dart';
+import 'controllers/theme_controller.dart';
+import 'dialogs/add_word_dialog.dart';
+import 'dialogs/join_game_dialog.dart';
+import 'dialogs/new_game_dialog.dart';
 import 'generated/l10n.dart';
 
 class GameApp extends StatelessWidget {
@@ -9,24 +19,37 @@ class GameApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: lightTheme,
-      localizationsDelegates: const [
-        S.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: S.delegate.supportedLocales,
-      locale: const Locale('en'),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    return ValueListenableBuilder(
+      valueListenable: ThemeController.themeNotifier,
+      builder: (context, themeValue, child) {
+        return ValueListenableBuilder(
+          valueListenable: ThemeController.localeNotifier,
+          builder: (context, localeValue, child) {
+            return MaterialApp(
+              title: 'Flutter Demo',
+              theme: themeValue ? AppThemes.darkTheme : AppThemes.lightTheme,
+              darkTheme: AppThemes.darkTheme,
+              themeMode: themeValue ? ThemeMode.dark : ThemeMode.light,
+              localizationsDelegates: const [
+                S.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: S.delegate.supportedLocales,
+              locale: localeValue,
+              home: MyHomePage(title: 'Flutter Demo Home Page'),
+            );
+          },
+        );
+      },
     );
   }
 }
 
+
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title});
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -36,6 +59,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  final WordRepository _wordRepository = WordRepository();
+  final GameRepository _gameRepository = GameRepository();
 
   void _incrementCounter() {
     setState(() {
@@ -46,37 +71,55 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: lightTheme.appBarTheme.backgroundColor,
-        title: Text(S.of(context).appTitle),
-      ),
+      appBar:  MyAppBar(
+      pageTitle: S.of(context).menu,
+      showBackButton: true,
+    ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SvgPicture.asset(
-              'assets/logo/logo_d.svg',
-              width: 120,
-            ),
-            SvgPicture.asset(
-              'assets/logo/logo_l.svg',
-              width: 60,
-            ),
+            const Logo(size: 100.0,),
             Text(
               'What is it?',
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
-            Text(
-              S.of(context).welcomeMessage,
-              style: Theme.of(context).textTheme.bodyLarge,
+            MainButton(
+              text: S.of(context).addWord,
+              onPressed: () async {
+                await addWordDialog(context);
+              },
+            ),
+            const SizedBox(height: 16),
+            MainButton(
+              text: S.of(context).startGame,
+              onPressed: () async {
+                newGameDialog(context, _gameRepository);
+              },
+            ),
+            const SizedBox(height: 16),
+            MainButton(
+              text: S.of(context).joinGame,
+              onPressed: () async {
+                joinGameDialog(context, _gameRepository);
+              },
             ),
             Text(
               S.of(context).hello,
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
             Text(
               '$_counter',
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
+            const SizedBox(height: 10),
+            CountDownTimer(initialTime: 15),
+            const SizedBox(height: 10),
+            CountDownTimer(
+              initialTime: 20, // Час у секундах
+              circleSize: 80.0, // Розмір кола
+              textSize: 36.0, // Розмір тексту
+              showCircle: false, // Показувати коло
             ),
           ],
         ),
@@ -85,8 +128,8 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
-        backgroundColor: Theme.of(context).primaryColor,
       ),
     );
   }
 }
+
