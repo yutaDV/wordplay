@@ -116,10 +116,10 @@ class _MyHomePageState extends State<MyHomePage> {
             CountDownTimer(initialTime: 15),
             const SizedBox(height: 10),
             CountDownTimer(
-              initialTime: 20, // Час у секундах
-              circleSize: 80.0, // Розмір кола
-              textSize: 36.0, // Розмір тексту
-              showCircle: false, // Показувати коло
+              initialTime: 20,
+              circleSize: 80.0,
+              textSize: 36.0,
+              showCircle: false,
             ),
           ],
         ),
