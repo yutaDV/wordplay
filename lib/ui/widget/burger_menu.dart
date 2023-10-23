@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../controllers/theme_controller.dart';
 import '../../generated/l10n.dart';
 import 'logo.dart';
@@ -80,8 +81,15 @@ class _BurgerMenuState extends State<BurgerMenu> {
               child: ToggleButtons(
                 isSelected: [ThemeController.isDarkTheme, !ThemeController.isDarkTheme],
                 children: [
-                  Text(S.of(context).dark),
-                  Text(S.of(context).light),
+                  SvgPicture.asset(
+                    'assets/logo/logo_d.svg',
+                    width: 24,
+                  ),
+                  SvgPicture.asset(
+                    'assets/logo/logo_l.svg',
+                    width: 24,
+                    height: 24,
+                  ),
                 ],
                 onPressed: (int index) {
                   setState(() {
