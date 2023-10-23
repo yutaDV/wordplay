@@ -2,15 +2,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/player.dart';
 import '../models/solo_game.dart';
 import '../models/round.dart';
+import '../models/word.dart';
+import '../repositories/word_repository.dart';
 
 class GameRepository {
   final CollectionReference gamesCollection =
   FirebaseFirestore.instance.collection('games');
 
+  final DictionaryRepository _dictionaryRepository = DictionaryRepository();
+
   Future<String> createGame(
       String accessCode,
       String gameType,
       String firstPlayerName,
+      String language,
+      String difficulty,
       ) async {
     try {
       final newGame = GameModel(
@@ -23,14 +29,15 @@ class GameRepository {
             playerStatus: 'first',
           ),
         ],
-        round: 0, // Початковий раунд
-        winner: null, // Переможець
-        words: [], // Список слів
-        language: 'українська', // Мова за замовчуванням українська
-        difficulty: 'medium', // Складність за замовчуванням середня
-        roundTime: 60, // Час раунду за замовчуванням 60 секунд
-        winWordThreshold: 50, // Визначення переможця за кількістю слів за замовчуванням 50
-        winAttemptThreshold: 0, // Визначення переможця за кількістю ігрових кіл за замовчуванням 0
+        round: 0,
+        winner: null,
+        language: language,
+        difficulty: difficulty,
+        words: await _dictionaryRepository.getWordsByLanguageAndCategory(language, difficulty),
+        // Ініціалізувати список слів відповідно до обраної мови та складності
+        roundTime: 60,
+        winWordThreshold: 50,
+        winAttemptThreshold: 0,
       );
 
       final DocumentReference gameDocRef = await gamesCollection.add({
@@ -70,7 +77,7 @@ class GameRepository {
     }
   }
 
-  Future<void> addPlayerToGame(String accessCode, String playerName) async {
+Future<void> addPlayerToGame(String accessCode, String playerName) async {
     try {
       // Знайдіть гру з вказаним accessCode та статусом "New"
       final QuerySnapshot querySnapshot = await gamesCollection

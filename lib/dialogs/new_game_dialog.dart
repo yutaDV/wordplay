@@ -13,7 +13,7 @@ void newGameDialog(BuildContext context, GameRepository gameRepository) {
         onDone: (List<String> answers) {
           String gameCode = answers[0];
           String playerName = answers[1];
-          gameRepository.createGame(gameCode, 'gameType', playerName);
+          gameRepository.createGame(gameCode, 'gameType', playerName,'Українська', 'easy');
         },
       );
     },
