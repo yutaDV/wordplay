@@ -70,8 +70,6 @@ flutter:
   assets:
     - assets/logo/logo_d.svg
     - assets/logo/logo_l.svg
-    - assets/theme/moon.svg
-    - assets/theme/sun.svg
     - assets/lottie_images/timer.json
   #   - images/a_dot_ham.jpeg
 

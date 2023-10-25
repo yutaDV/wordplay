@@ -56,7 +56,7 @@ class _BurgerMenuState extends State<BurgerMenu> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: ToggleButtons(
-                isSelected: [true, false], // Example selection, use your own logic
+                isSelected: [true, false],
                 children: const [
                   Text('Українська'),
                   Text('English'),
@@ -82,13 +82,13 @@ class _BurgerMenuState extends State<BurgerMenu> {
                 isSelected: [ThemeController.isDarkTheme, !ThemeController.isDarkTheme],
                 children: [
                   SvgPicture.asset(
-                    'assets/logo/logo_d.svg',
+                    'assets/logo/logo_l.svg',
                     width: 24,
                   ),
                   SvgPicture.asset(
-                    'assets/logo/logo_l.svg',
+                    'assets/logo/logo_d.svg',
                     width: 24,
-                    height: 24,
+
                   ),
                 ],
                 onPressed: (int index) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:wordplay/repositories/game_repository.dart';
 import 'package:wordplay/themes/theme.dart';
 import 'package:wordplay/ui/widget/app_bar.dart';
@@ -86,6 +87,10 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               'What is it?',
               style: Theme.of(context).textTheme.titleLarge,
+            ),
+            SvgPicture.asset(
+              'assets/theme/sun.svg',
+              width: 10,
             ),
             const SizedBox(height: 10),
             MainButton(
