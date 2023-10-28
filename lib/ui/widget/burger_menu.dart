@@ -56,7 +56,8 @@ class _BurgerMenuState extends State<BurgerMenu> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: ToggleButtons(
-                isSelected: [true, false],
+                isSelected: [ThemeController.isUkrainianSelected, !ThemeController.isUkrainianSelected],
+                fillColor: ThemeController.isUkrainianSelected ? Colors.grey.withOpacity(0.2) : Colors.grey.withOpacity(0.2),
                 children: const [
                   Text('Українська'),
                   Text('English'),
@@ -64,12 +65,15 @@ class _BurgerMenuState extends State<BurgerMenu> {
                 onPressed: (int index) {
                   if (index == 0) {
                     ThemeController.changeLocale(const Locale('uk'));
+                    ThemeController.isUkrainianSelected = true; // Оновлення значення при виборі української мови
                   } else {
                     ThemeController.changeLocale(const Locale('en'));
+                    ThemeController.isUkrainianSelected = false; // Оновлення значення при виборі англійської мови
                   }
                 },
               ),
             ),
+
             const SizedBox(height: 16),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),

@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/player.dart';
 import '../models/solo_game.dart';
 import '../models/round.dart';
-import '../models/word.dart';
 import '../repositories/word_repository.dart';
 
 class GameRepository {
