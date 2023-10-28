@@ -1,64 +1,88 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:wordplay/models/model_dictionary.dart';
+import 'package:wordplay/models/word.dart';
 
-import '../models/word.dart';
+class DictionaryRepository {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-class WordRepository {
-  final CollectionReference wordsCollection =
-  FirebaseFirestore.instance.collection('words');
-//переробити
-  Future<List<Word>> getWords({String? language, int? difficulty}) async {
+  Future<void> addWordToDictionary(Word word) async {
     try {
-      Query query = wordsCollection;
+      String language = word.language;
+      String category = word.difficulty;
 
-      // Додаємо фільтри, якщо параметри вказані
-      if (language != null) {
-        query = query.where('language', isEqualTo: language);
+      DocumentSnapshot document =
+      await _firestore.collection('dictionaries').doc(language).get();
+      if (!document.exists) {
+        // Якщо словника для цієї мови ще не існує, створіть новий словник
+        await _firestore.collection('dictionaries').doc(language).set(
+            Dictionary(
+                language: language, easyCategory: [], mediumCategory: [], hardCategory: [])
+                .toJson());
+        document = await _firestore.collection('dictionaries').doc(language).get();
       }
 
-      if (difficulty != null) {
-        query = query.where('difficulty', isEqualTo: difficulty);
+      // Отримайте поточний словник для мови
+      Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+      Dictionary dictionary = Dictionary.fromJson(data);
+
+      // Перевірте, чи існує вже це слово в обраній категорії
+      if (checkWordExists(dictionary, category, word.word)) {
+        print('${word.word} вже існує в обраній категорії');
+        return;
       }
 
-      QuerySnapshot querySnapshot = await query.get();
+      // Додайте слово до відповідної категорії
+      addToCategory(dictionary, category, word);
+      print('${word.word} додано');
 
-      final List<Word> words = querySnapshot.docs
-          .map((doc) => Word.fromDocument(doc))
-          .toList();
-
-      return words;
+      // Оновіть словник на Firebase
+      await _firestore.collection('dictionaries').doc(language).update(dictionary.toJson());
     } catch (e) {
-      // Обробіть помилку, якщо виникла
-      throw Exception('Помилка при отриманні слів: $e');
+      print('Сталась помилка при додаванні слова: $e');
     }
   }
 
+  bool checkWordExists(Dictionary dictionary, String category, String word) {
+    if (category == 'easy') {
+      return dictionary.easyCategory.contains(word);
+    } else if (category == 'medium') {
+      return dictionary.mediumCategory.contains(word);
+    } else if (category == 'hard') {
+      return dictionary.hardCategory.contains(word);
+    }
+    return false;
+  }
 
-  Future<void> addWord(Word word) async {
-    try {
-      // Отримуємо посилання на колекцію слів у Firestore
-      CollectionReference wordsCollection = FirebaseFirestore.instance.collection('words');
-
-      // Додаємо нове слово до колекції, конвертуючи об'єкт Word в Map
-      await wordsCollection.add({
-        'word': word.word,
-        'language': word.language,
-        'description': word.description,
-        'difficulty': word.difficulty,
-      });
-
-      // Успішно додано слово
-      print('Слово "${word.word}" успішно додано до бази даних.');
-    } catch (e) {
-      // Обробка помилки, якщо виникла
-      print('Помилка при додаванні слова: $e');
+  void addToCategory(Dictionary dictionary, String category, Word word) {
+    if (category == 'easy') {
+      dictionary.easyCategory.add(word.word);
+    } else if (category == 'medium') {
+      dictionary.mediumCategory.add(word.word);
+    } else if (category == 'hard') {
+      dictionary.hardCategory.add(word.word);
     }
   }
 
-  Future<void> updateWord(Word word) async {
-    //  оновлення слова в Firestore
+  Future<List<String>> getWordsByLanguageAndCategory(String language, String category) async {
+    // Отримати словник за мовою з Firestore
+    DocumentSnapshot document = await _firestore.collection('dictionaries').doc(language).get();
+    if (!document.exists) {
+      print('Словник для даної мови не знайдено');
+      return [];
+    }
+
+    Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+    Dictionary dictionary = Dictionary.fromJson(data);
+
+    // Повернути список слів відповідно до обраної категорії
+    if (category == 'easy') {
+      return List<String>.from(dictionary.easyCategory);
+    } else if (category == 'medium') {
+      return List<String>.from(dictionary.mediumCategory);
+    } else if (category == 'hard') {
+      return List<String>.from(dictionary.hardCategory);
+    }
+    return [];
   }
 
-  Future<void> deleteWord(String wordId) async {
-    // видалення слова з Firestore
-  }
 }

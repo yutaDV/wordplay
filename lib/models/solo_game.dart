@@ -1,7 +1,9 @@
 import 'package:wordplay/models/player.dart';
 
 class GameModel {
-  String? id; // Ідентифікатор гри (null, оскільки його створює база даних)
+  // Ідентифікатор гри (null, оскільки його створює база даних)
+  String? id;
+
   String status; // Статус гри
   String accessCode; // Код доступу до гри
   String gameType; // Тип гри (не змінюватиметься)

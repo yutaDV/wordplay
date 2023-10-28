@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
+import 'package:flutter_svg/svg.dart';
 import 'package:wordplay/repositories/game_repository.dart';
 import 'package:wordplay/themes/theme.dart';
 import 'package:wordplay/ui/widget/app_bar.dart';
 import 'package:wordplay/ui/widget/logo.dart';
+import 'package:wordplay/ui/widget/counter.dart';
 import 'package:wordplay/ui/widget/main_button.dart';
-import 'package:wordplay/repositories/word_repository.dart';
 import 'package:wordplay/ui/widget/timer.dart';
 import 'controllers/theme_controller.dart';
-import 'dialogs/add_word_dialog.dart';
 import 'dialogs/join_game_dialog.dart';
 import 'dialogs/new_game_dialog.dart';
 import 'generated/l10n.dart';
@@ -47,19 +46,18 @@ class GameApp extends StatelessWidget {
   }
 }
 
-
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  final WordRepository _wordRepository = WordRepository();
+  int _counter = 0; // Оголошення лічильника
+
   final GameRepository _gameRepository = GameRepository();
 
   void _incrementCounter() {
@@ -68,13 +66,19 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _decrementCounter() {
+    setState(() {
+      _counter--;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:  MyAppBar(
-      pageTitle: S.of(context).menu,
-      showBackButton: true,
-    ),
+        pageTitle: S.of(context).menu,
+        showBackButton: true,
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -84,20 +88,18 @@ class _MyHomePageState extends State<MyHomePage> {
               'What is it?',
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            MainButton(
-              text: S.of(context).addWord,
-              onPressed: () async {
-                await addWordDialog(context);
-              },
+            SvgPicture.asset(
+              'assets/theme/sun.svg',
+              width: 10,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 10),
             MainButton(
               text: S.of(context).startGame,
               onPressed: () async {
                 newGameDialog(context, _gameRepository);
               },
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 20),
             MainButton(
               text: S.of(context).joinGame,
               onPressed: () async {
@@ -108,28 +110,27 @@ class _MyHomePageState extends State<MyHomePage> {
               S.of(context).hello,
               style: Theme.of(context).textTheme.titleMedium,
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
             const SizedBox(height: 10),
             CountDownTimer(initialTime: 15),
             const SizedBox(height: 10),
             CountDownTimer(
-              initialTime: 20, // Час у секундах
-              circleSize: 80.0, // Розмір кола
-              textSize: 36.0, // Розмір тексту
-              showCircle: false, // Показувати коло
+              initialTime: 20,
+              circleSize: 80.0,
+              textSize: 36.0,
+              showCircle: false,
+            ),
+            const SizedBox(height: 10),
+            Align(
+              alignment: Alignment.centerRight,
+              child: CounterWidget(
+                counter: _counter,
+                onIncrement: _incrementCounter,
+                onDecrement: _decrementCounter,
+              ),
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
     );
   }
 }
-

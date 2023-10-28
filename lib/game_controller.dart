@@ -42,7 +42,7 @@ class GameController {
       String playerName = result[1];
 
       // Використовуйте gameCode та playerName для створення гри
-      gameRepository.createGame(gameCode, 'gameType', playerName);
+      gameRepository.createGame(gameCode, 'gameType', playerName, 'Українська', 'easy');
     }
   }
 

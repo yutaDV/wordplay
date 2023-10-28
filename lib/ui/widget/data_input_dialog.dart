@@ -78,7 +78,7 @@ class _DataInputDialogState extends State<DataInputDialog> {
                       Navigator.of(context).pop();
                     },
                     child: Text(
-                        S.of(context).ok,
+                      S.of(context).ok,
                       style: theme.textTheme.labelMedium,
                     ),
                   ),
@@ -110,5 +110,3 @@ class _DataInputDialogState extends State<DataInputDialog> {
     );
   }
 }
-
-
