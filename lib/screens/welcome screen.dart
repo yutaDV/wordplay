@@ -1,1 +1,1 @@
-import 'package:wordplay/themes/light_theme.dart';
+import 'package:wordplay/themes/theme.dart';
