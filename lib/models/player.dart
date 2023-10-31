@@ -63,7 +63,7 @@ class PlayerModel {
       role: 'active',
       totalScore: 0,
       rounds: [initialRound],
-      playerStatus: playerStatus, // Додайте параметр playerStatus тут
+      playerStatus: playerStatus,
     );
   }
 }

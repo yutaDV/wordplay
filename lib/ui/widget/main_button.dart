@@ -22,13 +22,13 @@ class MainButton extends StatelessWidget {
           end: Alignment.centerRight,
           colors: [theme.primaryColor, theme.focusColor],
         ),
-        borderRadius: BorderRadius.circular(20.0),
+        borderRadius: BorderRadius.circular(40.0),
       ),
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
+            borderRadius: BorderRadius.circular(40.0),
           ), backgroundColor: Colors.transparent,
           padding: const EdgeInsets.all(0),
         ),

@@ -15,10 +15,17 @@
   "menu": "Start menu",
   "dialogAddWord": "Enter the word you want to add its language and difficulty",
   "word": "Word",
-  "language": "Language",
-  "difficulty": "Difficulty (1, 2 or 3)",
+  "language": "Language:",
+  "difficulty": "Difficulty:",
   "rules": "Rules of the game",
   "theme": "Theme",
   "dark": "Dark",
-  "light": "Light"
+  "light": "Light",
+  "createGame": "Create Game",
+  "enterName": "Enter Your Name",
+  "easy": "Easy",
+  "medium": "Medium",
+  "hard": "Hard",
+  "enterAccessCode": "Enter Access Code",
+  "invitePlayers": "invite players"
 }

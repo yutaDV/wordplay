@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wordplay/cubit/navigation_cubit.dart';
 import 'package:wordplay/repositories/game_repository.dart';
 
-import '../dialogs/join_game_dialog.dart';
-import '../generated/l10n.dart';
-import '../ui/widget/app_bar.dart';
-import '../ui/widget/logo.dart';
-import '../ui/widget/main_button.dart';
+import '../../dialogs/join_game_dialog.dart';
+import '../../generated/l10n.dart';
+import '../../ui/widget/app_bar.dart';
+import '../../ui/widget/logo.dart';
+import '../../ui/widget/main_button.dart';
 
 class WelcomePage extends StatelessWidget {
   late final GameRepository gameRepository;
