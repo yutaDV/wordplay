@@ -27,5 +27,9 @@
   "medium": "Середній",
   "hard": "Складний",
   "enterAccessCode": "Введіть код для гри",
-  "invitePlayers": "запросити гравців"
+  "invitePlayers": "запросити гравців",
+  "individual": "Індивідуальна гра",
+  "gameType": "Тип гри:",
+  "teamGame": "Командна гра",
+  "roundTime": "Час раунду"
 }

@@ -27,5 +27,9 @@
   "medium": "Medium",
   "hard": "Hard",
   "enterAccessCode": "Enter Access Code",
-  "invitePlayers": "invite players"
+  "invitePlayers": "invite players",
+  "individual": "Individual",
+  "gameType": "Game type:",
+  "teamGame": "Team game",
+  "roundTime": "Round time"
 }
