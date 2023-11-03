@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:wordplay/features/create_game_page/widget/game_type_selection.dart';
 import 'package:wordplay/features/create_game_page/widget/language_selection.dart';
 import 'package:wordplay/features/create_game_page/widget/difficulty_selection.dart';
+import 'package:wordplay/features/create_game_page/widget/winner_selection.dart'; // Додано імпорт нового віджета
 import 'package:wordplay/ui/widget/app_bar.dart';
 import 'package:wordplay/ui/widget/logo.dart';
 import 'package:wordplay/ui/widget/main_button.dart';
 import '../../generated/l10n.dart';
-
 
 class CreateGamePage extends StatefulWidget {
   const CreateGamePage({Key? key}) : super(key: key);
@@ -16,8 +16,23 @@ class CreateGamePage extends StatefulWidget {
 }
 
 class _CreateGamePageState extends State<CreateGamePage> {
-  bool isIndividualGame = true; // Значення за замовчуванням
+  bool isIndividualGame = true;
   double roundTime = 60; // Початкове значення часу раунду
+  bool isByAttempts = true; // Початкове значення для визначення переможця за кількістю ігрових спроб
+  double attemptsValue = 5; // Початкове значення для доріжки за кількістю ігрових спроб
+  double wordsValue = 20; // Початкове значення для доріжки за кількістю відгаданих слів
+
+  void onAttemptsChanged(double value) {
+    setState(() {
+      attemptsValue = value;
+    });
+  }
+
+  void onWordsChanged(double value) {
+    setState(() {
+      wordsValue = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,10 +99,9 @@ class _CreateGamePageState extends State<CreateGamePage> {
                 child: Row(
                   children: [
                     Text(
-                      '${S.of(context).roundTime}: ${roundTime.toInt()} ',
+                      '${S.of(context).roundTime}:   ${roundTime.toInt()} ',
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
-
                     Expanded(
                       child: Slider(
                         value: roundTime,
@@ -105,7 +119,30 @@ class _CreateGamePageState extends State<CreateGamePage> {
                   ],
                 ),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 12),
+              Padding(
+                padding: const EdgeInsets.only(left: 12.0),
+                child: Text(
+                  S.of(context).methodWinner,
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+              WinnerSelection(
+                isByAttempts: isByAttempts,
+                onWinnerTypeChanged: (value) {
+                  setState(() {
+                    isByAttempts = value;
+                  });
+                },
+                attemptsValue: attemptsValue,
+                wordsValue: wordsValue,
+                onAttemptsChanged: onAttemptsChanged,
+                onWordsChanged: onWordsChanged,
+              ),
+              const SizedBox(height: 20),
               Center(
                 child: MainButton(
                   text: S.of(context).invitePlayers,

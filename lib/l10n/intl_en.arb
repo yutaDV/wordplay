@@ -31,5 +31,8 @@
   "individual": "Individual",
   "gameType": "Game type:",
   "teamGame": "Team game",
-  "roundTime": "Round time"
+  "roundTime": "Round time",
+  "byGuessedWords": "number of points",
+  "byAttempts": "number of rounds",
+  "methodWinner": "Method of determining the winner"
 }
