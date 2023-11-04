@@ -16,9 +16,8 @@ class DifficultySelection extends StatelessWidget {
           padding: const EdgeInsets.only(left: 12.0),
           child: Text(
             S.of(context).difficulty,
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               fontWeight: FontWeight.bold,
-              fontSize: 14,
             ),
           ),
         ),

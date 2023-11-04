@@ -4,7 +4,7 @@ import 'package:wordplay/features/create_game_page/widget/language_selection.dar
 import 'package:wordplay/features/create_game_page/widget/difficulty_selection.dart';
 import 'package:wordplay/features/create_game_page/widget/winner_selection.dart'; // Додано імпорт нового віджета
 import 'package:wordplay/ui/widget/app_bar.dart';
-import 'package:wordplay/ui/widget/logo.dart';
+import 'package:wordplay/ui/widget/logo_row.dart';
 import 'package:wordplay/ui/widget/main_button.dart';
 import '../../generated/l10n.dart';
 
@@ -48,20 +48,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 8),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Logo(size: 30),
-                  SizedBox(width: 12),
-                  Logo(size: 40),
-                  SizedBox(width: 12),
-                  Logo(size: 60),
-                  SizedBox(width: 12),
-                  Logo(size: 40),
-                  SizedBox(width: 12),
-                  Logo(size: 30),
-                ],
-              ),
+              const LogoRow(),
               const SizedBox(height: 12),
               TextFormField(
                 style: const TextStyle(fontSize: 14),
@@ -95,12 +82,12 @@ class _CreateGamePageState extends State<CreateGamePage> {
               ),
               const SizedBox(height: 16),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Row(
                   children: [
                     Text(
                       '${S.of(context).roundTime}:   ${roundTime.toInt()} ',
-                      style: Theme.of(context).textTheme.titleSmall,
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     Expanded(
                       child: Slider(
@@ -130,6 +117,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
                   ),
                 ),
               ),
+              const SizedBox(height: 12),
               WinnerSelection(
                 isByAttempts: isByAttempts,
                 onWinnerTypeChanged: (value) {

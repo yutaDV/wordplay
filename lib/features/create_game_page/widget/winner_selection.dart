@@ -25,7 +25,7 @@ class WinnerSelection extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             GestureDetector(
               onTap: () {
@@ -36,28 +36,28 @@ class WinnerSelection extends StatelessWidget {
                 size: 20.0,
               ),
             ),
-            const SizedBox(width: 8),
             Text(S.of(context).byAttempts),
-            Expanded(
-              child: Row(
-                children: [
-                  Slider(
-                    value: attemptsValue,
-                    min: 1,
-                    max: 10,
-                    divisions: 10,
-                    label: attemptsValue.round().toString(),
-                    onChanged: onAttemptsChanged,
-                  ),
-                  Text('${attemptsValue.round()}', style: Theme.of(context).textTheme.titleSmall),
-                ],
-              ),
+            Row(
+              children: [
+                Slider(
+                  value: attemptsValue,
+                  min: 1,
+                  max: 10,
+                  divisions: 10,
+                  label: attemptsValue.round().toString(),
+                  onChanged: onAttemptsChanged,
+                ),
+                Text(
+                  '${attemptsValue.round()}',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ],
             ),
           ],
         ),
         const SizedBox(height: 8),
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             GestureDetector(
               onTap: () {
@@ -68,23 +68,22 @@ class WinnerSelection extends StatelessWidget {
                 size: 24.0,
               ),
             ),
-            const SizedBox(width: 8),
             Text(S.of(context).byGuessedWords),
-            Expanded(
-              child: Row(
-                children: [
-                  Slider(
-                    value: wordsValue,
-                    min: 5,
-                    max: 50,
-                    divisions: 10,
-                    label: wordsValue.round().toString(),
-                    onChanged: onWordsChanged,
-                  ),
-                  Text('${wordsValue.round()}', style: Theme.of(context).textTheme.titleSmall),
-
-                ],
-              ),
+            Row(
+              children: [
+                Slider(
+                  value: wordsValue,
+                  min: 5,
+                  max: 50,
+                  divisions: 10,
+                  label: wordsValue.round().toString(),
+                  onChanged: onWordsChanged,
+                ),
+                Text(
+                  '${wordsValue.round()}',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ],
             ),
           ],
         ),

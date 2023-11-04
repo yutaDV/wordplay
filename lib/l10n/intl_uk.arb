@@ -31,7 +31,7 @@
   "individual": "Індивідуальна гра",
   "gameType": "Тип гри:",
   "teamGame": "Командна гра",
-  "roundTime": "Час раунду",
+  "roundTime": "Час раунду (секунд)",
   "byGuessedWords": "за кількістю балів",
   "byAttempts": "за кількістю раундів",
   "methodWinner": "Спосіб визначення переможця"
