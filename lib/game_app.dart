@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:wordplay/features/create_game_page/create_game_page.dart';
 import 'package:wordplay/features/welcome_page/welcome_page.dart';
-import 'package:wordplay/themes/theme.dart';
-import 'controllers/theme_controller.dart';
+import 'package:wordplay/features/app_theme/theme.dart';
+import 'features/app_theme/theme_controller.dart';
 import 'generated/l10n.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wordplay/cubit/navigation_cubit.dart';
+import 'package:wordplay/features/welcome_page/navigation_cubit.dart';
 
 class GameApp extends StatelessWidget {
   const GameApp({Key? key});

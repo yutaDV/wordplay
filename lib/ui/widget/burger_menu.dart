@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../controllers/theme_controller.dart';
+import '../../features/app_theme/theme_controller.dart';
 import '../../generated/l10n.dart';
 import 'logo.dart';
 
