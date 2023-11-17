@@ -39,7 +39,7 @@ class DifficultySelection extends StatelessWidget {
             );
           }).toList(),
           onChanged: (String? newValue) {
-            // Ваша логіка тут
+            //  логіка тут
           },
           value: S.of(context).easy,
         ),

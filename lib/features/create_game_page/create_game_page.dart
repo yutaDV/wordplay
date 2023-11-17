@@ -1,39 +1,30 @@
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wordplay/features/create_game_page/cubit/create_game_cubit.dart';
+import 'package:wordplay/features/create_game_page/cubit/create_game_state.dart';
 import 'package:wordplay/features/create_game_page/widget/game_type_selection.dart';
 import 'package:wordplay/features/create_game_page/widget/language_selection.dart';
 import 'package:wordplay/features/create_game_page/widget/difficulty_selection.dart';
-import 'package:wordplay/features/create_game_page/widget/winner_selection.dart'; // Додано імпорт нового віджета
+import 'package:wordplay/features/create_game_page/widget/winner_selection.dart';
 import 'package:wordplay/ui/widget/app_bar.dart';
 import 'package:wordplay/ui/widget/logo_row.dart';
 import 'package:wordplay/ui/widget/main_button.dart';
 import '../../generated/l10n.dart';
 
-class CreateGamePage extends StatefulWidget {
+
+class CreateGamePage extends StatelessWidget {
   const CreateGamePage({Key? key}) : super(key: key);
 
   @override
-  _CreateGamePageState createState() => _CreateGamePageState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => CreateGameCubit(),
+      child: CreateGameView(),
+    );
+  }
 }
-
-class _CreateGamePageState extends State<CreateGamePage> {
-  bool isIndividualGame = true;
-  double roundTime = 60; // Початкове значення часу раунду
-  bool isByAttempts = true; // Початкове значення для визначення переможця за кількістю ігрових спроб
-  double attemptsValue = 5; // Початкове значення для доріжки за кількістю ігрових спроб
-  double wordsValue = 20; // Початкове значення для доріжки за кількістю відгаданих слів
-
-  void onAttemptsChanged(double value) {
-    setState(() {
-      attemptsValue = value;
-    });
-  }
-
-  void onWordsChanged(double value) {
-    setState(() {
-      wordsValue = value;
-    });
-  }
-
+class CreateGameView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,76 +59,51 @@ class _CreateGamePageState extends State<CreateGamePage> {
                 ),
               ),
               const SizedBox(height: 12),
-              const LanguageSelection(),
-              const SizedBox(height: 12),
-              const DifficultySelection(),
-              const SizedBox(height: 12),
-              GameTypeSelection(
-                isIndividualGame: isIndividualGame,
-                onGameTypeChanged: (value) {
-                  setState(() {
-                    isIndividualGame = value;
-                  });
+              BlocBuilder<CreateGameCubit, CreateGameState>(
+                builder: (context, state) {
+                  return Column(
+                    children: [
+                      if (!state.languageSelected) ...[
+                        LanguageSelection(),
+                      ] else if (!state.difficultySelected) ...[
+                        DifficultySelection(),
+                      ] else if (!state.winnerSelected) ...[
+                        WinnerSelection(
+                          isByAttempts: state.isByAttempts,
+                          onWinnerTypeChanged: (value) {
+                            context.read<CreateGameCubit>().setByAttempts(value);
+                          },
+                          attemptsValue: state.attemptsValue,
+                          wordsValue: state.wordsValue,
+                          onAttemptsChanged: (value) {
+                            context.read<CreateGameCubit>().setAttemptsValue(value);
+                          },
+                          onWordsChanged: (value) {
+                            context.read<CreateGameCubit>().setWordsValue(value);
+                          },
+                        ),
+                      ] else ...[
+                        GameTypeSelection(
+                          isIndividualGame: state.isIndividualGame,
+                          onGameTypeChanged: (value) {
+                            context.read<CreateGameCubit>().setIndividualGame(value);
+                          },
+                        ),
+                        const SizedBox(height: 16),
+                        // ... інші віджети
+                        const SizedBox(height: 20),
+                        Center(
+                          child: MainButton(
+                            text: S.of(context).invitePlayers,
+                            onPressed: () {
+                              // логіка тут
+                            },
+                          ),
+                        ),
+                      ],
+                    ],
+                  );
                 },
-              ),
-              const SizedBox(height: 16),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Row(
-                  children: [
-                    Text(
-                      '${S.of(context).roundTime}:   ${roundTime.toInt()} ',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                    Expanded(
-                      child: Slider(
-                        value: roundTime,
-                        min: 30,
-                        max: 180,
-                        divisions: 15,
-                        label: roundTime.round().toString(),
-                        onChanged: (double value) {
-                          setState(() {
-                            roundTime = value;
-                          });
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 12),
-              Padding(
-                padding: const EdgeInsets.only(left: 12.0),
-                child: Text(
-                  S.of(context).methodWinner,
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12),
-              WinnerSelection(
-                isByAttempts: isByAttempts,
-                onWinnerTypeChanged: (value) {
-                  setState(() {
-                    isByAttempts = value;
-                  });
-                },
-                attemptsValue: attemptsValue,
-                wordsValue: wordsValue,
-                onAttemptsChanged: onAttemptsChanged,
-                onWordsChanged: onWordsChanged,
-              ),
-              const SizedBox(height: 20),
-              Center(
-                child: MainButton(
-                  text: S.of(context).invitePlayers,
-                  onPressed: () {
-                    // логіка тут
-                  },
-                ),
               ),
             ],
           ),
