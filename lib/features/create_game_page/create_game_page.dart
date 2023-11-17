@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wordplay/features/create_game_page/cubit/create_game_cubit.dart';
-import 'package:wordplay/features/create_game_page/cubit/create_game_state.dart';
 import 'package:wordplay/features/create_game_page/widget/game_type_selection.dart';
 import 'package:wordplay/features/create_game_page/widget/language_selection.dart';
 import 'package:wordplay/features/create_game_page/widget/difficulty_selection.dart';
@@ -20,11 +19,13 @@ class CreateGamePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => CreateGameCubit(),
-      child: CreateGameView(),
+      child: const CreateGameView(),
     );
   }
 }
 class CreateGameView extends StatelessWidget {
+  const CreateGameView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,9 +65,9 @@ class CreateGameView extends StatelessWidget {
                   return Column(
                     children: [
                       if (!state.languageSelected) ...[
-                        LanguageSelection(),
+                        const LanguageSelection(),
                       ] else if (!state.difficultySelected) ...[
-                        DifficultySelection(),
+                        const DifficultySelection(),
                       ] else if (!state.winnerSelected) ...[
                         WinnerSelection(
                           isByAttempts: state.isByAttempts,
