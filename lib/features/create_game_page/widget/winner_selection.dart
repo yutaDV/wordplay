@@ -40,7 +40,7 @@ class WinnerSelection extends StatelessWidget {
             Row(
               children: [
                 Slider(
-                  value: attemptsValue,
+                  value: attemptsValue.toDouble(),
                   min: 1,
                   max: 10,
                   divisions: 10,
@@ -72,7 +72,7 @@ class WinnerSelection extends StatelessWidget {
             Row(
               children: [
                 Slider(
-                  value: wordsValue,
+                  value: wordsValue.toDouble(),
                   min: 5,
                   max: 50,
                   divisions: 10,

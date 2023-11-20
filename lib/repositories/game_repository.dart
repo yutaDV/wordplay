@@ -16,6 +16,9 @@ class GameRepository {
       String firstPlayerName,
       String language,
       String difficulty,
+      int roundTime,
+      int winWordThreshold,
+      int winAttemptThreshold,
       ) async {
     try {
       final newGame = GameModel(
@@ -32,11 +35,11 @@ class GameRepository {
         winner: null,
         language: language,
         difficulty: difficulty,
-        words: await _dictionaryRepository.getWordsByLanguageAndCategory(language, difficulty),
-        // Ініціалізувати список слів відповідно до обраної мови та складності
-        roundTime: 60,
-        winWordThreshold: 50,
-        winAttemptThreshold: 0,
+        words: await _dictionaryRepository.getWordsByLanguageAndCategory(
+            language, difficulty),
+        roundTime: roundTime,
+        winWordThreshold: winWordThreshold,
+        winAttemptThreshold: winAttemptThreshold,
       );
 
       final DocumentReference gameDocRef = await gamesCollection.add({
@@ -76,9 +79,26 @@ class GameRepository {
     }
   }
 
-Future<void> addPlayerToGame(String accessCode, String playerName) async {
+  Future<GameModel?> getGameByAccessCode(String accessCode) async {
     try {
-      // Знайдіть гру з вказаним accessCode та статусом "New"
+      final QuerySnapshot querySnapshot = await gamesCollection
+          .where('accessCode', isEqualTo: accessCode)
+          .limit(1)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        final DocumentSnapshot gameDoc = querySnapshot.docs.first;
+        return GameModel.fromMap(gameDoc.data() as Map<String, dynamic>);
+      } else {
+        return null;
+      }
+    } catch (e) {
+      throw Exception('Помилка при отриманні гри: $e');
+    }
+  }
+
+  Future<void> addPlayerToGame(String accessCode, String playerName) async {
+    try {
       final QuerySnapshot querySnapshot = await gamesCollection
           .where('accessCode', isEqualTo: accessCode)
           .where('status', isEqualTo: 'New')
@@ -87,9 +107,8 @@ Future<void> addPlayerToGame(String accessCode, String playerName) async {
 
       if (querySnapshot.docs.isNotEmpty) {
         final DocumentSnapshot gameDoc = querySnapshot.docs.first;
-        final List<dynamic> playersList = gameDoc['players'];
+        final List<dynamic> playersList = List.from(gameDoc['players'] ?? []);
 
-        //максимальний порядковий номер гравця у грі
         int maxPlayerNumber = 0;
         for (final playerData in playersList) {
           final int playerNumber = playerData['playerNumber'];
@@ -98,10 +117,9 @@ Future<void> addPlayerToGame(String accessCode, String playerName) async {
           }
         }
 
-        // Додайте нового гравця до гри
         final PlayerModel newPlayer = PlayerModel(
           name: playerName,
-          playerNumber: maxPlayerNumber + 1, // Наступний порядковий номер
+          playerNumber: maxPlayerNumber + 1,
           role: 'waiting',
           playerStatus: 'another',
           totalScore: 0,
@@ -115,10 +133,8 @@ Future<void> addPlayerToGame(String accessCode, String playerName) async {
           ],
         );
 
-        // Оновіть список гравців у грі
-        playersList.add(newPlayer.toMap()); // Перетворити об'єкт гравця у Map та додати до списку
+        playersList.add(newPlayer.toMap());
 
-        // Оновіть документ гри з оновленими даними
         await gameDoc.reference.update({
           'players': playersList,
         });

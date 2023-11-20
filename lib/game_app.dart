@@ -7,7 +7,7 @@ import 'controllers/theme_controller.dart';
 import 'generated/l10n.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wordplay/cubit/navigation_cubit.dart';
+import 'package:wordplay/features/welcome_page/navigation_cubit.dart';
 
 class GameApp extends StatelessWidget {
   const GameApp({Key? key});
@@ -35,7 +35,7 @@ class GameApp extends StatelessWidget {
               locale: localeValue,
               home: BlocProvider(
                 create: (context) => NavigationCubit(),
-                child:  CreateGamePage(),
+                child:  WelcomePage(),
               ),
             );
           },

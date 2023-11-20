@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:wordplay/generated/l10n.dart';
 
-
 class DifficultySelection extends StatelessWidget {
-  const DifficultySelection({
+  DifficultySelection({
     Key? key,
+    required this.onDifficultyChanged,
   }) : super(key: key);
+
+  final void Function(String newDifficulty) onDifficultyChanged;
+
+  // Мапа для відповідності обраних складностей їх кодам
+  Map<String, String> difficultyCodeMap = {
+    S.current.easy: 'easy',
+    S.current.medium: 'medium',
+    S.current.hard: 'hard',
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +38,7 @@ class DifficultySelection extends StatelessWidget {
             ),
             contentPadding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
           ),
-          items: <String>[S.of(context).easy, S.of(context).medium, S.of(context).hard].map((String value) {
+          items: difficultyCodeMap.keys.map((String value) {
             return DropdownMenuItem<String>(
               value: value,
               child: Text(
@@ -39,9 +48,10 @@ class DifficultySelection extends StatelessWidget {
             );
           }).toList(),
           onChanged: (String? newValue) {
-            // Ваша логіка тут
+            final selectedDifficulty = difficultyCodeMap[newValue ?? ''] ?? S.current.easy;
+            onDifficultyChanged(selectedDifficulty);
           },
-          value: S.of(context).easy,
+          value: difficultyCodeMap.keys.first,
         ),
         const SizedBox(height: 10),
       ],

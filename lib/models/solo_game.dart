@@ -31,4 +31,24 @@ class GameModel {
     this.winWordThreshold = 50, // Визначення переможця за кількістю слів за замовчуванням - 50
     this.winAttemptThreshold = 0, // Визначення переможця за кількістю ігрових кіл за замовчуванням - 0
   });
+
+
+  factory GameModel.fromMap(Map<String, dynamic> map) {
+    return GameModel(
+      status: map['status'],
+      accessCode: map['accessCode'],
+      gameType: map['gameType'],
+      players: (map['players'] as List<dynamic>)
+          .map((playerData) => PlayerModel.fromMap(playerData))
+          .toList(),
+      round: map['round'],
+      winner: map['winner'],
+      words: (map['words'] as List<dynamic>).cast<String>(),
+      language: map['language'],
+      difficulty: map['difficulty'],
+      roundTime: map['roundTime'],
+      winWordThreshold: map['winWordThreshold'],
+      winAttemptThreshold: map['winAttemptThreshold'],
+    );
+  }
 }

@@ -2,25 +2,40 @@ import 'package:flutter/material.dart';
 import 'package:wordplay/features/create_game_page/widget/game_type_selection.dart';
 import 'package:wordplay/features/create_game_page/widget/language_selection.dart';
 import 'package:wordplay/features/create_game_page/widget/difficulty_selection.dart';
-import 'package:wordplay/features/create_game_page/widget/winner_selection.dart'; // Додано імпорт нового віджета
+import 'package:wordplay/features/create_game_page/widget/winner_selection.dart';
+import 'package:wordplay/repositories/game_repository.dart';
+
 import 'package:wordplay/ui/widget/app_bar.dart';
 import 'package:wordplay/ui/widget/logo_row.dart';
 import 'package:wordplay/ui/widget/main_button.dart';
 import '../../generated/l10n.dart';
 
 class CreateGamePage extends StatefulWidget {
-  const CreateGamePage({Key? key}) : super(key: key);
+  const CreateGamePage({Key? key, required this.gameRepository}) : super(key: key);
+
+  final GameRepository gameRepository;
 
   @override
+  // ignore: library_private_types_in_public_api
   _CreateGamePageState createState() => _CreateGamePageState();
 }
 
 class _CreateGamePageState extends State<CreateGamePage> {
   bool isIndividualGame = true;
-  double roundTime = 60; // Початкове значення часу раунду
-  bool isByAttempts = true; // Початкове значення для визначення переможця за кількістю ігрових спроб
-  double attemptsValue = 5; // Початкове значення для доріжки за кількістю ігрових спроб
-  double wordsValue = 20; // Початкове значення для доріжки за кількістю відгаданих слів
+  double roundTime = 60;
+  bool isByAttempts = true;
+  double attemptsValue = 5;
+  double wordsValue = 20;
+  TextEditingController accessCodeController = TextEditingController();
+  TextEditingController playerNameController = TextEditingController();
+  String selectedLanguageCode = 'uk';
+  String selectedDifficulty = 'easy';
+
+  void onLanguageChanged(String newLanguageCode) {
+    setState(() {
+      selectedLanguageCode = newLanguageCode;
+    });
+  }
 
   void onAttemptsChanged(double value) {
     setState(() {
@@ -31,6 +46,12 @@ class _CreateGamePageState extends State<CreateGamePage> {
   void onWordsChanged(double value) {
     setState(() {
       wordsValue = value;
+    });
+  }
+
+  void onDifficultyChanged(String newDifficulty) {
+    setState(() {
+      selectedDifficulty = newDifficulty;
     });
   }
 
@@ -51,6 +72,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
               const LogoRow(),
               const SizedBox(height: 12),
               TextFormField(
+                controller: accessCodeController,
                 style: const TextStyle(fontSize: 14),
                 decoration: InputDecoration(
                   labelText: S.of(context).enterAccessCode,
@@ -60,6 +82,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
               ),
               const SizedBox(height: 12),
               TextFormField(
+                controller: playerNameController,
                 style: const TextStyle(fontSize: 14),
                 decoration: InputDecoration(
                   labelText: S.of(context).enterName,
@@ -68,9 +91,13 @@ class _CreateGamePageState extends State<CreateGamePage> {
                 ),
               ),
               const SizedBox(height: 12),
-              const LanguageSelection(),
+              LanguageSelection(
+                onLanguageChanged: onLanguageChanged,
+              ),
               const SizedBox(height: 12),
-              const DifficultySelection(),
+              DifficultySelection(
+                onDifficultyChanged: onDifficultyChanged,
+              ),
               const SizedBox(height: 12),
               GameTypeSelection(
                 isIndividualGame: isIndividualGame,
@@ -135,7 +162,16 @@ class _CreateGamePageState extends State<CreateGamePage> {
                 child: MainButton(
                   text: S.of(context).invitePlayers,
                   onPressed: () {
-                    // логіка тут
+                    widget.gameRepository.createGame(
+                      accessCodeController.text,
+                      'solo_game', // поки лише один варіант пізніше реалізувати командну гру
+                      playerNameController.text,
+                      selectedLanguageCode,
+                      selectedDifficulty,
+                      roundTime.toInt(),
+                      isByAttempts ? attemptsValue.toInt() ?? 0 : 0,
+                      !isByAttempts ? wordsValue.toInt() ?? 0 : 0,
+                    );
                   },
                 ),
               ),

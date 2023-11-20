@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:wordplay/generated/l10n.dart';
 
+class LanguageSelection extends StatefulWidget {
+  const LanguageSelection({Key? key, required this.onLanguageChanged}) : super(key: key);
 
-class LanguageSelection extends StatelessWidget {
-  const LanguageSelection({
-    Key? key,
-  }) : super(key: key);
+  final void Function(String newLanguageCode) onLanguageChanged;
+
+  @override
+  LanguageSelectionState createState() => LanguageSelectionState();
+}
+
+class LanguageSelectionState extends State<LanguageSelection> {
+  String selectedLanguageCode = 'uk';
+
+  // Мапа для відповідності обраних мов їх кодам
+  Map<String, String> languageCodeMap = {
+    'Українська': 'uk',
+    'English': 'en',
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +41,7 @@ class LanguageSelection extends StatelessWidget {
             ),
             contentPadding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
           ),
-          items: <String>['Українська', 'English'].map((String value) {
+          items: languageCodeMap.keys.map((String value) {
             return DropdownMenuItem<String>(
               value: value,
               child: Text(
@@ -39,7 +51,10 @@ class LanguageSelection extends StatelessWidget {
             );
           }).toList(),
           onChanged: (String? newValue) {
-            //  логіка тут
+            setState(() {
+              selectedLanguageCode = languageCodeMap[newValue ?? ''] ?? 'uk';
+              widget.onLanguageChanged(selectedLanguageCode);
+            });
           },
           value: 'Українська',
         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wordplay/cubit/navigation_cubit.dart';
+import 'package:wordplay/features/create_game_page/create_game_page.dart';
+import 'package:wordplay/features/welcome_page/navigation_cubit.dart';
 import 'package:wordplay/repositories/game_repository.dart';
 
 import '../../dialogs/join_game_dialog.dart';
@@ -24,30 +25,37 @@ class WelcomePage extends StatelessWidget {
         showBackButton: false,
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Logo(size: 200.0),
-            const SizedBox(height: 40),
-            Text(
-              S.of(context).hello,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(height: 100),
-            MainButton(
-              text: S.of(context).startGame,
-              onPressed: () async {
-                context.read<NavigationCubit>().goToCreateGamePage();
-              },
-            ),
-            const SizedBox(height: 20),
-            MainButton(
-              text: S.of(context).joinGame,
-              onPressed: () async {
-                joinGameDialog(context, gameRepository);
-              },
-            ),
-          ],
+        child: BlocBuilder<NavigationCubit, PageType>(
+          builder: (context, state) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const Logo(size: 200.0),
+                const SizedBox(height: 40),
+                Text(
+                  S.of(context).hello,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                const SizedBox(height: 100),
+                MainButton(
+                  text: S.of(context).startGame,
+                  onPressed: () async {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) =>  CreateGamePage(gameRepository: gameRepository),),
+                    );
+                  },
+                ),
+                const SizedBox(height: 20),
+                MainButton(
+                  text: S.of(context).joinGame,
+                  onPressed: () async {
+                    joinGameDialog(context, gameRepository);
+                  },
+                ),
+              ],
+            );
+          },
         ),
       ),
     );

@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wordplay/repositories/game_repository.dart';
-import 'package:wordplay/ui/widget/data_input_dialog.dart';
 
 class GameController {
   final BuildContext context;
@@ -9,56 +7,58 @@ class GameController {
 
   GameController(this.context, this.gameRepository);
 
-  Future<List<String>> _showInputDialog(String title, List<String> questions, List<String> answerLabels) async {
-    final result = await showDialog(
-      context: context,
-      builder: (context) {
-        return DataInputDialog(
-          title: title,
-          questions: questions,
-          onDone: (List<String> answers) {
-            Navigator.of(context).pop(answers); // Повертаємо дані
-          },
-        );
-      },
-    );
+  Future<void> createGame({
+    required String accessCode,
+    required String gameType,
+    required String playerName,
+    required String language,
+    required String difficulty,
+    required int roundTime,
+    required int winWordThreshold,
+    required int winAttemptThreshold,
+  }) async {
+    try {
+      final gameId = await gameRepository.createGame(
+        accessCode: accessCode,
+        gameType: gameType,
+        firstPlayerName: playerName,
+        language: language,
+        difficulty: difficulty,
+        roundTime: roundTime,
+        winWordThreshold: winWordThreshold,
+        winAttemptThreshold: winAttemptThreshold,
+      );
 
-    if (result != null) {
-      return result; // Повертаємо список рядків відповідей
-    }
-
-    return []; // Повертаємо пустий список, якщо нічого не було введено
-  }
-
-  Future<void> createGame() async {
-    final result = await _showInputDialog(
-      "Введіть код гри до якої бажаєте долучитись та ваше ім'я",
-      ["Код гри", "Ваше ім'я"],
-      ["Код гри", "Ваше ім'я"],
-    );
-
-    if (result.isNotEmpty && result.length == 2) {
-      String gameCode = result[0];
-      String playerName = result[1];
-
-      // Використовуйте gameCode та playerName для створення гри
-      gameRepository.createGame(gameCode, 'gameType', playerName, 'Українська', 'easy');
+      print('Гра створена з ідентифікатором: $gameId');
+    } catch (e) {
+      // Обробка помилки при створенні гри
+      print('Помилка при створенні гри: $e');
     }
   }
 
-  Future<void> addPlayerToGame() async {
-    final result = await _showInputDialog(
-      "Введіть код гри до якої бажаєте долучитись та ваше ім'я",
-      ["Код гри", "Ваше ім'я"],
-      ["Код гри", "Ваше ім'я"],
-    );
+  Future<void> getGameByAccessCode(String accessCode) async {
+    try {
+      final game = await gameRepository.getGameByAccessCode(accessCode);
 
-    if (result.isNotEmpty && result.length == 2) {
-      String gameCode = result[0];
-      String playerName = result[1];
+      if (game != null) {
+        // Обробка отриманої гри
+        print('Отримано гру: $game');
+      } else {
+        print('Гра не знайдена');
+      }
+    } catch (e) {
+      // Обробка помилки при отриманні гри
+      print('Помилка при отриманні гри: $e');
+    }
+  }
 
-      // Використовуйте gameCode та playerName для додавання гравця до гри
-      gameRepository.addPlayerToGame(gameCode, playerName);
+  Future<void> addPlayerToGame(String accessCode, String playerName) async {
+    try {
+      await gameRepository.addPlayerToGame(accessCode, playerName);
+      print('Гравець успішно доданий до гри');
+    } catch (e) {
+      // Обробка помилки при додаванні гравця до гри
+      print('Помилка при додаванні гравця до гри: $e');
     }
   }
 }
