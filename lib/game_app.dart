@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:wordplay/features/create_game_page/create_game_page.dart';
+import 'package:wordplay/features/waiting_players/view/waitng_players_page.dart';
 import 'package:wordplay/features/welcome_page/welcome_page.dart';
 import 'package:wordplay/themes/theme.dart';
 import 'controllers/theme_controller.dart';
@@ -35,7 +36,8 @@ class GameApp extends StatelessWidget {
               locale: localeValue,
               home: BlocProvider(
                 create: (context) => NavigationCubit(),
-                child:  WelcomePage(),
+                //child:  WelcomePage(),
+                child: const WaitingPage(accessCode:'yulia',playerName:'yulia'),
               ),
             );
           },

@@ -3,12 +3,13 @@ import 'package:wordplay/features/create_game_page/widget/game_type_selection.da
 import 'package:wordplay/features/create_game_page/widget/language_selection.dart';
 import 'package:wordplay/features/create_game_page/widget/difficulty_selection.dart';
 import 'package:wordplay/features/create_game_page/widget/winner_selection.dart';
+import 'package:wordplay/generated/l10n.dart';
 import 'package:wordplay/repositories/game_repository.dart';
 
 import 'package:wordplay/ui/widget/app_bar.dart';
 import 'package:wordplay/ui/widget/logo_row.dart';
 import 'package:wordplay/ui/widget/main_button.dart';
-import '../../generated/l10n.dart';
+
 
 class CreateGamePage extends StatefulWidget {
   const CreateGamePage({Key? key, required this.gameRepository}) : super(key: key);

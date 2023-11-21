@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../dialogs/join_game_dialog.dart';
-import '../dialogs/new_game_dialog.dart';
 import '../generated/l10n.dart';
 import '../repositories/game_repository.dart';
 import '../ui/widget/app_bar.dart';
@@ -63,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
             MainButton(
               text: S.of(context).startGame,
               onPressed: () async {
-                newGameDialog(context, _gameRepository);
+
               },
             ),
             const SizedBox(height: 20),

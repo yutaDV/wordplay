@@ -145,4 +145,38 @@ class GameRepository {
       throw Exception('Помилка під час додавання гравця до гри: $e');
     }
   }
+
+  Future<List<String>> getPlayerNamesByAccessCode(String accessCode) async {
+    try {
+      final QuerySnapshot querySnapshot = await gamesCollection
+          .where('accessCode', isEqualTo: accessCode)
+          .limit(1)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        final DocumentSnapshot gameDoc = querySnapshot.docs.first;
+        final String gameStatus = gameDoc['status'];
+
+        if (gameStatus == 'New') {
+          final List<dynamic> playersList = gameDoc['players'] ?? [];
+
+          final List<String> playerNames = playersList
+              .map<String>((playerData) => playerData['name'].toString())
+              .toList();
+
+          return playerNames;
+        } else {
+          // Якщо статус гри не є 'New'
+          throw Exception('Нова гра з кодовим словом $accessCode не знайдена.');
+        }
+      } else {
+        // Якщо гра не знайдена за кодовим словом
+        throw Exception('Гра з кодовим словом $accessCode не знайдена.');
+      }
+    } catch (e) {
+      // Обробка помилки, якщо щось пішло не так
+      throw Exception('Помилка при отриманні імен гравців: $e');
+    }
+  }
+
 }
