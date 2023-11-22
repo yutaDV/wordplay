@@ -3,6 +3,7 @@ import 'package:wordplay/features/create_game_page/widget/game_type_selection.da
 import 'package:wordplay/features/create_game_page/widget/language_selection.dart';
 import 'package:wordplay/features/create_game_page/widget/difficulty_selection.dart';
 import 'package:wordplay/features/create_game_page/widget/winner_selection.dart';
+import 'package:wordplay/features/waiting_players/view/waitng_players_page.dart';
 import 'package:wordplay/generated/l10n.dart';
 import 'package:wordplay/repositories/game_repository.dart';
 
@@ -162,10 +163,10 @@ class _CreateGamePageState extends State<CreateGamePage> {
               Center(
                 child: MainButton(
                   text: S.of(context).invitePlayers,
-                  onPressed: () {
-                    widget.gameRepository.createGame(
+                  onPressed: () async {
+                    await widget.gameRepository.createGame(
                       accessCodeController.text,
-                      'solo_game', // поки лише один варіант пізніше реалізувати командну гру
+                      'solo_game',
                       playerNameController.text,
                       selectedLanguageCode,
                       selectedDifficulty,
@@ -173,8 +174,19 @@ class _CreateGamePageState extends State<CreateGamePage> {
                       isByAttempts ? attemptsValue.toInt() ?? 0 : 0,
                       !isByAttempts ? wordsValue.toInt() ?? 0 : 0,
                     );
+                    // ignore: use_build_context_synchronously
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => WaitingPage(
+                          accessCode: accessCodeController.text,
+                          playerName: playerNameController.text,
+                        ),
+                      ),
+                    );
                   },
                 ),
+
               ),
             ],
           ),

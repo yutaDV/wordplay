@@ -36,8 +36,8 @@ class GameApp extends StatelessWidget {
               locale: localeValue,
               home: BlocProvider(
                 create: (context) => NavigationCubit(),
-                //child:  WelcomePage(),
-                child: const WaitingPage(accessCode:'yulia',playerName:'yulia'),
+                child:  WelcomePage(),
+                //child: const WaitingPage(accessCode:'yulia',playerName:'yulia'),
               ),
             );
           },

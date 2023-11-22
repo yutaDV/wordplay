@@ -53,26 +53,41 @@ class _WaitingPageContentState extends State<WaitingPageContent> {
             final playerName = state.playerNames.isNotEmpty ? state.playerNames[0] : 'Unknown';
 
             return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const SizedBox(height: 10),
                 const LogoRow(),
-                const SizedBox(height: 12),
-                Text('Welcome, ${widget.playerName}! You have joined the game.'),
                 const SizedBox(height: 20),
-                Text('Player List:'),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: state.playerNames.length,
-                    itemBuilder: (context, index) {
-                      final player = state.playerNames[index];
-                      final playerLabel = index == 0 ? 'First Player' : 'Player $index';
-                      return ListTile(
-                        title: Text('$playerLabel: $player'),
-                      );
-                    },
+                Text(
+                  '${S.of(context).welcome} ${widget.playerName}! ${S.of(context).youHaveJoinedTheGame}',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(height: 30),
+                Text(
+                  S.of(context).ListOfPlayers,
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
+                const SizedBox(height: 20),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 30.0),
+                    child: ListView.builder(
+                      itemCount: state.playerNames.length,
+                      itemBuilder: (context, index) {
+                        final player = state.playerNames[index];
+                        final playerLabel = (index + 1).toString();
+                        return ListTile(
+                          title: Text('$playerLabel. $player'),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+
+
                 const SizedBox(height: 20),
                 MainButton(
                   text: S.of(context).startTheGame,
@@ -80,6 +95,7 @@ class _WaitingPageContentState extends State<WaitingPageContent> {
                     // TODO
                   },
                 ),
+                const SizedBox(height: 30),
               ],
             );
           } else {

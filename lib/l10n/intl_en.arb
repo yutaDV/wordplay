@@ -36,5 +36,8 @@
   "roundTime": "Round time (seconds)",
   "byGuessedWords": "number of points",
   "byAttempts": "number of rounds",
-  "methodWinner": "Method of determining the winner"
+  "methodWinner": "Method of determining the winner",
+  "welcome": "Welcome",
+  "ListOfPlayers": "Players who joined the game:",
+  "youHaveJoinedTheGame": "You have joined the game."
 }
