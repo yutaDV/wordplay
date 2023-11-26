@@ -1,11 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:wordplay/features/waiting_players/view/waitng_players_page.dart';
-import 'package:wordplay/ui/widget/app_bar.dart';
 import 'package:wordplay/ui/widget/data_input_dialog.dart';
 import 'package:wordplay/generated/l10n.dart';
 import '../repositories/game_repository.dart';
 
-void joinGameDialog(BuildContext context, GameRepository gameRepository) {
+Future<List<String>?> joinGameDialog(BuildContext context, GameRepository gameRepository) async {
+  Completer<List<String>?> completer = Completer();
+
   showDialog(
     context: context,
     builder: (context) {
@@ -17,28 +19,14 @@ void joinGameDialog(BuildContext context, GameRepository gameRepository) {
           String playerName = answers[1];
           await gameRepository.addPlayerToGame(gameCode, playerName);
 
-          // Перевірка, чи віджет все ще має доступ до контексту перед викликом Navigator.push
-          if (context != null) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Scaffold(
-                  appBar: MyAppBar(
-                    pageTitle: S.of(context).WaitingPlayers,
-                    showBackButton: false,
-                  ),
-                  body: SingleChildScrollView(
-                    child: WaitingPage(
-                      accessCode: gameCode,
-                      playerName: playerName,
-                    ),
-                  ),
-                ),
-              ),
-            );
-          }
+          // Передаємо результат через Completer
+          completer.complete([gameCode, playerName]);
+
         },
       );
     },
   );
+
+  // Повертаємо Future з Completer
+  return completer.future;
 }

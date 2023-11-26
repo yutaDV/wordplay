@@ -8,11 +8,12 @@ class DataInputDialog extends StatefulWidget {
   final List<String> questions;
   final Function(List<String>) onDone;
 
-  const DataInputDialog({super.key,
+  const DataInputDialog({
+    Key? key,
     required this.title,
     required this.questions,
     required this.onDone,
-  });
+  }) : super(key: key);
 
   @override
   _DataInputDialogState createState() => _DataInputDialogState();
@@ -38,74 +39,75 @@ class _DataInputDialogState extends State<DataInputDialog> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0),
       ),
-      child: Stack(
-        children: [
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  widget.title,
-                  style: theme.textTheme.titleMedium,
-                ),
-              ),
-              for (int i = 0; i < widget.questions.length; i++)
+      child: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: TextField(
-                    controller: controllers[i],
-                    style: theme.textTheme.titleMedium,
-                    decoration: InputDecoration(
-                      labelText: widget.questions[i],
-                      labelStyle: theme.textTheme.titleSmall?.copyWith(color: theme.dividerColor),// Колір тексту мітки
+                  child: Text(
+                    widget.title,
+                    style: theme.textTheme.titleSmall
+                  ),
+                ),
+                for (int i = 0; i < widget.questions.length; i++)
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: TextField(
+                      controller: controllers[i],
+                      style: theme.textTheme.subtitle1,
+                      decoration: InputDecoration(
+                        labelText: widget.questions[i],
+                        labelStyle: theme.textTheme.subtitle2?.copyWith(color: theme.dividerColor),
+                      ),
+                    ),
+                  ),
+                const SizedBox(height: 16),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 16.0),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        List<String> answers = [];
+                        for (int i = 0; i < controllers.length; i++) {
+                          answers.add(controllers[i].text);
+                        }
+                        widget.onDone(answers);
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        S.of(context).ok,
+                        style: theme.textTheme.button,
+                      ),
                     ),
                   ),
                 ),
-              const SizedBox(height: 16),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 16.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      List<String> answers = [];
-                      for (int i = 0; i < controllers.length; i++) {
-                        answers.add(controllers[i].text);
-                      }
-                      widget.onDone(answers);
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(
-                      S.of(context).ok,
-                      style: theme.textTheme.labelMedium,
-                    ),
-                  ),
-                ),
-              ),
-
-            ],
-          ),
-          Positioned(
-            top: 0,
-            right: 0,
-            child: IconButton(
-              icon:  Icon(
-                Icons.close,
-                color: theme.primaryColor,
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+              ],
             ),
-          ),
-          const Positioned(
-            bottom: 10,
-            left: 20,
-            child: Logo(size: 50.00),
-          ),
-        ],
+            Positioned(
+              top: 0,
+              right: 0,
+              child: IconButton(
+                icon: Icon(
+                  Icons.close,
+                  color: theme.primaryColor,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+            const Positioned(
+              bottom: 10,
+              left: 20,
+              child: Logo(size: 50.00),
+            ),
+          ],
+        ),
       ),
     );
   }
