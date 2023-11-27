@@ -9,8 +9,10 @@ class AppThemes {
   // Constants color range for light theme
   static const Color _lightPrimaryColor = Color(0xFF0D3A2C);
   static const Color _lightBackgroundColor = Color(0xFF6BD8B6);
+
   static const Color _lightFocusColor = Color(0xFF04CE80);
   static const Color _lightDividerColor = Color(0xC37F8C7E);
+
 
 
   // Text theme for light theme
