@@ -22,6 +22,7 @@ class AppThemes {
     fontWeight: FontWeight.w700,
   );
 
+
   static  const TextTheme _lightTextTheme = TextTheme(
     titleLarge: TextStyle(fontSize: 48.0, fontWeight: FontWeight.w900, color: _lightPrimaryColor,  letterSpacing: 1, height: 1.3,),
     titleMedium: TextStyle(fontSize: 26.0, fontWeight: FontWeight.w500,  color: _lightPrimaryColor,  letterSpacing: 0.5, height: 1.2,),
