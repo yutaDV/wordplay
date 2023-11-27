@@ -51,6 +51,7 @@ class _WaitingPageContentState extends State<WaitingPageContent> {
         builder: (context, state) {
           if (state is GameLoaded) {
             final playerName = state.playerNames.isNotEmpty ? state.playerNames[0] : 'Unknown';
+            final isGameStarter = playerName == widget.playerName;
 
             return Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -81,20 +82,32 @@ class _WaitingPageContentState extends State<WaitingPageContent> {
                         final playerLabel = (index + 1).toString();
                         return ListTile(
                           title: Text('$playerLabel. $player'),
+                          leading: index == 0
+                              ? isGameStarter
+                              ? const Icon(Icons.star)
+                              : const Icon(Icons.label)
+                              : null,
                         );
                       },
                     ),
                   ),
                 ),
 
-
                 const SizedBox(height: 20),
-                MainButton(
-                  text: S.of(context).startTheGame,
-                  onPressed: () async {
-                    // TODO
-                  },
-                ),
+                if (isGameStarter)
+                  MainButton(
+                    text: S.of(context).startTheGame,
+                    onPressed: () async {
+                      // TODO: Логіка для початку гри
+                    },
+                  ),
+                if (!isGameStarter)
+                  Text(
+                      S.of(context).WaitingNotice,
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                  ),
                 const SizedBox(height: 30),
               ],
             );

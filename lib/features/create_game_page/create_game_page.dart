@@ -3,7 +3,7 @@ import 'package:wordplay/features/create_game_page/widget/game_type_selection.da
 import 'package:wordplay/features/create_game_page/widget/language_selection.dart';
 import 'package:wordplay/features/create_game_page/widget/difficulty_selection.dart';
 import 'package:wordplay/features/create_game_page/widget/winner_selection.dart';
-import 'package:wordplay/features/waiting_players/view/waitng_players_page.dart';
+import 'package:wordplay/features/waiting_players/view/waiting_players_page.dart';
 import 'package:wordplay/generated/l10n.dart';
 import 'package:wordplay/repositories/game_repository.dart';
 

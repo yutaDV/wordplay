@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wordplay/features/create_game_page/create_game_page.dart';
-import 'package:wordplay/features/waiting_players/view/waitng_players_page.dart';
+import 'package:wordplay/features/waiting_players/view/waiting_players_page.dart';
 import 'package:wordplay/features/welcome_page/navigation_cubit.dart';
 import 'package:wordplay/repositories/game_repository.dart';
 

@@ -12,11 +12,12 @@ class GameInitial extends GameState {}
 
 class GameLoaded extends GameState {
   final List<String> playerNames;
+  final bool isGameStarter; // Додайте це поле
 
-  const GameLoaded({required this.playerNames});
+  const GameLoaded({required this.playerNames, required this.isGameStarter});
 
   @override
-  List<Object?> get props => [playerNames];
+  List<Object?> get props => [playerNames, isGameStarter]; // Додайте isGameStarter сюди
 }
 
 class GameError extends GameState {

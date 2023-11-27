@@ -18,12 +18,14 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: showBackButton ? IconButton(
+      leading: showBackButton
+          ? IconButton(
         icon: const Icon(Icons.arrow_back),
         onPressed: () {
           Navigator.of(context).pop();
         },
-      ) : null,
+      )
+          : null,
       title: Row(
         children: [
           const Logo(size: 40),
