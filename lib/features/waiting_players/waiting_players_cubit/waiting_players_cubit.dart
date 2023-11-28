@@ -27,4 +27,23 @@ class GameCubit extends Cubit<GameState> {
       emit(GameError(message: 'Error loading game: $e'));
     }
   }
+
+  void updateGame(String accessCode) async {
+    try {
+      final game = await gameRepository.getGameByAccessCode(accessCode);
+      if (game != null) {
+        final playerNames = await gameRepository.getPlayerNamesByAccessCode(
+            accessCode);
+
+        final isGameStarter = playerNames.isNotEmpty;
+
+        emit(
+            GameLoaded(playerNames: playerNames, isGameStarter: isGameStarter));
+      } else {
+        emit(const GameError(message: 'Game not found.'));
+      }
+    } catch (e) {
+      emit(GameError(message: 'Error updating game: $e'));
+    }
+  }
 }

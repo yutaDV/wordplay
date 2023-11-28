@@ -179,4 +179,55 @@ class GameRepository {
     }
   }
 
+  //деталі гри
+  Future<Map<String, dynamic>> getGameDetailsByAccessCode(String accessCode) async {
+    try {
+      final QuerySnapshot querySnapshot = await gamesCollection
+          .where('accessCode', isEqualTo: accessCode)
+          .limit(1)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        final DocumentSnapshot gameDoc = querySnapshot.docs.first;
+        final GameModel game = GameModel.fromMap(gameDoc.data() as Map<String, dynamic>);
+
+        final List<Map<String, dynamic>> playersData = (gameDoc['players'] as List<dynamic>)
+            .map((playerData) => Map<String, dynamic>.from(playerData))
+            .toList();
+
+        final List<Map<String, dynamic>> playersDetails = playersData
+            .map((playerData) {
+          final PlayerModel player = PlayerModel.fromMap(playerData);
+          final List<Map<String, dynamic>> roundsData = (playerData['rounds'] as List<dynamic>)
+              .map((roundData) => Map<String, dynamic>.from(roundData))
+              .toList();
+          final List<RoundModel> rounds = roundsData
+              .map((roundData) => RoundModel.fromMap(roundData))
+              .toList();
+
+          return {
+            'name': player.name,
+            'playerNumber': player.playerNumber,
+            'role': player.role,
+            'playerStatus': player.playerStatus,
+            'totalScore': player.totalScore,
+            'rounds': rounds,
+          };
+        })
+            .toList();
+
+        return {
+          'game': game,
+          'players': playersDetails,
+        };
+      } else {
+        throw Exception('Гра з кодом $accessCode не знайдена.');
+      }
+    } catch (e) {
+      throw Exception('Помилка при отриманні даних про гру: $e');
+    }
+  }
+
+
+
 }

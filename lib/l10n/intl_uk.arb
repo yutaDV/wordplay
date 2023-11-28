@@ -40,5 +40,6 @@
   "welcome": "Вітаю",
   "ListOfPlayers": "Гравці які долучились до гри:",
   "WaitingNotice": "Очікуйте доки перший гравець почне гру",
-  "youHaveJoinedTheGame": "Ви долучились до гри!"
+  "StartPage": "Старт гри",
+  "youHaveJoinedTheGame": "Ви долучились до гри!  код гри  "
 }

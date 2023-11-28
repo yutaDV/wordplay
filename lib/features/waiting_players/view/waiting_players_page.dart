@@ -37,7 +37,7 @@ class _WaitingPageContentState extends State<WaitingPageContent> {
   void initState() {
     super.initState();
 
-    BlocProvider.of<GameCubit>(context).loadGame(widget.accessCode);
+    BlocProvider.of<GameCubit>(context).updateGame(widget.accessCode);
   }
 
   @override
@@ -47,7 +47,10 @@ class _WaitingPageContentState extends State<WaitingPageContent> {
         pageTitle: S.of(context).WaitingPlayers,
         showBackButton: false,
       ),
-      body: BlocBuilder<GameCubit, GameState>(
+      body: BlocConsumer<GameCubit, GameState>(
+        listener: (context, state) {
+
+        },
         builder: (context, state) {
           if (state is GameLoaded) {
             final playerName = state.playerNames.isNotEmpty ? state.playerNames[0] : 'Unknown';
@@ -60,7 +63,7 @@ class _WaitingPageContentState extends State<WaitingPageContent> {
                 const LogoRow(),
                 const SizedBox(height: 20),
                 Text(
-                  '${S.of(context).welcome} ${widget.playerName}! ${S.of(context).youHaveJoinedTheGame}',
+                  '${S.of(context).welcome} ${widget.playerName}! ${S.of(context).youHaveJoinedTheGame} ${widget.accessCode}',
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
@@ -103,10 +106,10 @@ class _WaitingPageContentState extends State<WaitingPageContent> {
                   ),
                 if (!isGameStarter)
                   Text(
-                      S.of(context).WaitingNotice,
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                    S.of(context).WaitingNotice,
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 const SizedBox(height: 30),
               ],
