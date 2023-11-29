@@ -41,5 +41,7 @@
   "ListOfPlayers": "Players who joined the game:",
   "WaitingNotice": "Wait for the first player to start the game",
   "StartPage": "Start page",
+  "InfoGame": "Information about the game: ",
+  "numberOfRounds": "Number of rounds",
   "youHaveJoinedTheGame": "You have joined the game. Access Code - "
 }

@@ -36,10 +36,12 @@
   "roundTime": "Час раунду (секунд)",
   "byGuessedWords": "за кількістю балів",
   "byAttempts": "за кількістю раундів",
+  "numberOfRounds": "Кількість раундів",
   "methodWinner": "Спосіб визначення переможця",
   "welcome": "Вітаю",
   "ListOfPlayers": "Гравці які долучились до гри:",
   "WaitingNotice": "Очікуйте доки перший гравець почне гру",
   "StartPage": "Старт гри",
+  "InfoGame": "Інормація про гру: ",
   "youHaveJoinedTheGame": "Ви долучились до гри!  код гри  "
 }

@@ -1,11 +1,14 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wordplay/features/start_game/start_game_cubit/start_game_cubit.dart';
 import 'package:wordplay/generated/l10n.dart';
-import 'package:wordplay/models/round.dart';
 import 'package:wordplay/models/solo_game.dart';
 import 'package:wordplay/repositories/game_repository.dart';
 import 'package:wordplay/ui/widget/app_bar.dart';
+
+import 'widgets_start_game/game_details_widget.dart';
+
 
 class GameStartPage extends StatelessWidget {
   final String playerName;
@@ -75,50 +78,13 @@ class _GameStartContentState extends State<GameStartContent> {
           } else if (!snapshot.hasData) {
             return Container();
           } else {
-            return _buildGameDetails(snapshot.data!);
+            final GameModel game = snapshot.data!['game'];
+            final List<Map<String, dynamic>> playersDetails = snapshot.data!['players'];
+
+            return GameDetailsWidget(game: game, playersDetails: playersDetails);
           }
         },
       ),
     );
-  }
-
-  Widget _buildGameDetails(Map<String, dynamic> gameDetails) {
-    final GameModel game = gameDetails['game'];
-    final List<Map<String, dynamic>> playersDetails = gameDetails['players'];
-
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // Виведення інформації про гру
-          Text('Назва гри: ${game.accessCode}'),
-          Text('Складність: ${game.difficulty}'),
-          Text('Тривалість раунду: ${game.roundTime} секунд'),
-          Text('Мова слів: ${game.language}'),
-          Text('Кількість раундів: ${game.winAttemptThreshold}'),
-
-          // Виведення інформації про раунди гравців
-          for (final player in playersDetails)
-            Text('Гравець: ${player['name']}, Роль: ${player['role']}, Статус: ${player['playerStatus']}'),
-
-          // Отримання інформації про рахунки гравців
-          for (final player in playersDetails) ...[
-            Text('Рахунок ${player['name']}: ${player['totalScore']}'),
-
-            // Обробка інформації про раунди гравців
-            if (player['rounds'] != null && player['rounds'] is List<dynamic>) ...[
-              for (final roundData in player['rounds'] as List<dynamic>)
-                if (roundData != null && roundData is Map<String, dynamic>)
-                  _buildRoundInfo(roundData),
-            ],
-          ],
-        ],
-      ),
-    );
-  }
-
-  Widget _buildRoundInfo(Map<String, dynamic> roundData) {
-    final RoundModel round = RoundModel.fromMap(roundData);
-    return Text('Раунд ${round.roundNumber}: Рахунок ${round.roundScore}');
   }
 }
