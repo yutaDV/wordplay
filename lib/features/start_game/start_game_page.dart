@@ -6,6 +6,7 @@ import 'package:wordplay/generated/l10n.dart';
 import 'package:wordplay/models/solo_game.dart';
 import 'package:wordplay/repositories/game_repository.dart';
 import 'package:wordplay/ui/widget/app_bar.dart';
+import 'package:wordplay/ui/widget/main_button.dart';
 
 import 'widgets_start_game/game_details_widget.dart';
 
@@ -36,7 +37,6 @@ class GameStartPage extends StatelessWidget {
     );
   }
 }
-
 class GameStartContent extends StatefulWidget {
   final String playerCode;
   final String gameCode;
@@ -81,7 +81,23 @@ class _GameStartContentState extends State<GameStartContent> {
             final GameModel game = snapshot.data!['game'];
             final List<Map<String, dynamic>> playersDetails = snapshot.data!['players'];
 
-            return GameDetailsWidget(game: game, playersDetails: playersDetails);
+            // Перевірка, чи поточний гравець є активним
+            final bool isActivePlayer = playersDetails.any((player) => player['name'] == widget.playerCode && player['role'] == 'active');
+
+            return Column(
+              children: [
+
+                GameDetailsWidget(game: game, playersDetails: playersDetails),
+                if (isActivePlayer)
+                  const SizedBox(height: 20),
+                MainButton(
+                  text: S.of(context).play,
+                  onPressed: () async {
+                    // TODO: Логіка для початку гри
+                  },
+                ),
+              ],
+            );
           }
         },
       ),

@@ -21,7 +21,8 @@ class GameDetailsWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _buildGameInfo(context),
-          _buildPlayersInfo(),
+          _buildPlayersInfo(context),
+          NextMoveWidget(playerName: _getActivePlayerName()),
         ],
       ),
     );
@@ -31,51 +32,79 @@ class GameDetailsWidget extends StatelessWidget {
     return Column(
       children: [
         const SizedBox(height: 20),
-        Text(S.of(context).InfoGame,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.titleMedium),
+        Text(
+          S.of(context).InfoGame,
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontSize: 26.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         const SizedBox(height: 10),
         const LogoRowSmall(repeatCount: 4, logoSize: 16),
         const SizedBox(height: 20),
-
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             RowItem(context, const Logo(size: 14.0), '${S.of(context).accessCode} - ${game.accessCode}'),
-            RowItem(context,const Logo(size: 14.0), '${S.of(context).difficulty}: ${game.difficulty}'),
-            RowItem(context,const Logo(size: 14.0), '${S.of(context).roundTime}: ${game.roundTime}'),
-            RowItem(context,const Logo(size: 14.0), '${S.of(context).language}: ${game.language}'),
-            RowItem(context,const Logo(size: 14.0), '${S.of(context).numberOfRounds}: ${game.winAttemptThreshold}'),
+            RowItem(context, const Logo(size: 14.0), '${S.of(context).difficulty}: ${game.difficulty}'),
+            RowItem(context, const Logo(size: 14.0), '${S.of(context).roundTime}: ${game.roundTime}'),
+            RowItem(context, const Logo(size: 14.0), '${S.of(context).language}: ${game.language}'),
+            RowItem(context, const Logo(size: 14.0), '${S.of(context).numberOfRounds}: ${game.winAttemptThreshold}'),
           ],
         ),
+        const SizedBox(height: 24),
+        Text(
+          S.of(context).playersScore,
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontSize: 26.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         const SizedBox(height: 20),
-
+        const LogoRowSmall(repeatCount: 4, logoSize: 16),
+        const SizedBox(height: 20),
       ],
     );
   }
 
-  Widget _buildPlayersInfo() {
+  Widget _buildPlayersInfo(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        for (final player in playersDetails) ...[
-          _buildPlayerInfo(player),
-          _buildPlayerScores(player),
-          if (player['rounds'] != null && player['rounds'] is List<dynamic>) ...[
-            for (final roundData in player['rounds'] as List<dynamic>)
+        for (int i = 0; i < playersDetails.length; i++) ...[
+          _buildPlayerInfo(context, i, playersDetails[i]),
+          _buildPlayerScores(playersDetails[i]),
+          if (playersDetails[i]['rounds'] != null && playersDetails[i]['rounds'] is List<dynamic>) ...[
+            for (final roundData in playersDetails[i]['rounds'] as List<dynamic>)
               if (roundData != null && roundData is Map<String, dynamic>)
                 _buildRoundInfo(roundData),
           ],
+          const SizedBox(height: 10), // Відступ між гравцями
         ],
       ],
     );
   }
 
-  Widget _buildPlayerInfo(Map<String, dynamic> player) {
-    return Text('Гравець: ${player['name']}, Роль: ${player['role']}, Статус: ${player['playerStatus']}');
+  Widget _buildPlayerInfo(BuildContext context, int index, Map<String, dynamic> player) {
+    return Row(
+      children: [
+        const SizedBox(width: 16),
+        Text('${index + 1}.', style: const TextStyle(
+          fontSize: 20.0,
+          fontWeight: FontWeight.bold,
+        ),),
+        const SizedBox(width: 16),
+        Text('${player['name']}:', style: Theme.of(context).textTheme.titleSmall),
+        const SizedBox(width: 10),
+        Text('Рахунок: ${player['totalScore']}', style: Theme.of(context).textTheme.titleSmall),
+      ],
+    );
   }
 
   Widget _buildPlayerScores(Map<String, dynamic> player) {
-    return Text('Рахунок ${player['name']}: ${player['totalScore']}');
+    return SizedBox.shrink(); // Тут рахунок гравця, ви вже вивели в _buildPlayerInfo
   }
 
   Widget _buildRoundInfo(Map<String, dynamic> roundData) {
@@ -95,6 +124,44 @@ class GameDetailsWidget extends StatelessWidget {
             text,
             style: Theme.of(context).textTheme.titleSmall,
           ),
+        ),
+      ],
+    );
+  }
+
+  String _getActivePlayerName() {
+    for (final player in playersDetails) {
+      if (player['role'] == 'active') {
+        return player['name'];
+      }
+    }
+    return 'Невідомо';
+  }
+}
+
+class NextMoveWidget extends StatelessWidget {
+  final String playerName;
+
+  NextMoveWidget({required this.playerName});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const SizedBox(height: 20),
+        Text(
+        S.of(context).nextMove,
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontSize: 26.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 10),
+        Text(
+          '${S.of(context).player}, ${playerName} ${S.of(context).playsNext}',
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.titleMedium,
         ),
       ],
     );

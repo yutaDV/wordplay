@@ -43,5 +43,10 @@
   "StartPage": "Start page",
   "InfoGame": "Information about the game: ",
   "numberOfRounds": "Number of rounds",
+  "playersScore": "Players and score: ",
+  "nextMove": "The next move ",
+  "player": "Player",
+  "playsNext": "plays next",
+  "play": "play",
   "youHaveJoinedTheGame": "You have joined the game. Access Code - "
 }
