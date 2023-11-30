@@ -227,7 +227,29 @@ class GameRepository {
       throw Exception('Помилка при отриманні даних про гру: $e');
     }
   }
+//зміна стутусу на грати
+  Future<void> startGame(String accessCode) async {
+    try {
+      final QuerySnapshot querySnapshot = await gamesCollection
+          .where('accessCode', isEqualTo: accessCode)
+          .where('status', isEqualTo: 'New')
+          .limit(1)
+          .get();
 
+      if (querySnapshot.docs.isNotEmpty) {
+        final DocumentSnapshot gameDoc = querySnapshot.docs.first;
+
+        await gameDoc.reference.update({
+          'status': 'playing',
+        });
+      } else {
+        // Якщо гра не знайдена або вже не є у статусі "New"
+        throw Exception('Гра не знайдена або не може бути розпочата.');
+      }
+    } catch (e) {
+      throw Exception('Помилка при розпочатті гри: $e');
+    }
+  }
 
 
 }

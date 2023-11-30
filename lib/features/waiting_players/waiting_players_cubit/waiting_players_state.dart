@@ -1,6 +1,5 @@
 part of 'waiting_players_cubit.dart';
 
-
 abstract class GameState extends Equatable {
   const GameState();
 
@@ -27,4 +26,11 @@ class GameError extends GameState {
 
   @override
   List<Object?> get props => [message];
+}
+
+class GameStarted extends GameState {
+  const GameStarted();
+
+  @override
+  List<Object?> get props => [];
 }

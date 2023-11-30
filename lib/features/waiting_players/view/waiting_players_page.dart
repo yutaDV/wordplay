@@ -16,7 +16,7 @@ class WaitingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => GameCubit(GameRepository()),
+      create: (context) => GameCubit(GameRepository(), accessCode),
       child: WaitingPageContent(accessCode: accessCode, playerName: playerName),
     );
   }
@@ -101,7 +101,7 @@ class _WaitingPageContentState extends State<WaitingPageContent> {
                   MainButton(
                     text: S.of(context).startTheGame,
                     onPressed: () async {
-                      // TODO: Логіка для початку гри
+                      BlocProvider.of<GameCubit>(context).startGame(context, widget.accessCode, widget.playerName);
                     },
                   ),
                 if (!isGameStarter)
