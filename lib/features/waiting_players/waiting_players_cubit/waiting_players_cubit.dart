@@ -11,45 +11,53 @@ part 'waiting_players_state.dart';
 class GameCubit extends Cubit<GameState> {
   final GameRepository gameRepository;
   final String accessCode;
+  final String playerName;
+  final BuildContext context;
 
   // контролер слухача Firestore
-  late StreamSubscription<DocumentSnapshot<Map<String, dynamic>>> gameSubscription;
+  late StreamSubscription<QuerySnapshot<Map<String, dynamic>>>? gameSubscription;
 
-  GameCubit(this.gameRepository, this.accessCode) : super(GameInitial()) {
+  GameCubit(this.gameRepository, this.accessCode, this.playerName, this.context) : super(GameInitial()) {
     // При ініціалізації кубіту  слухання гри
     startListeningToGame(accessCode);
   }
 
   void startListeningToGame(String accessCode) {
-    // Почніть слухати Firestore
+    print('Start listening to game with access code: $accessCode');
     gameSubscription = FirebaseFirestore.instance
         .collection('games')
-        .doc(accessCode)
+        .where('accessCode', isEqualTo: accessCode)
         .snapshots()
-        .listen((DocumentSnapshot<Map<String, dynamic>> snapshot) {
+        .listen((QuerySnapshot<Map<String, dynamic>> snapshots) {
       try {
-        // Отримати дані гри з снепшоту
-        final gameData = snapshot.data();
+        // Отримайте дані гри з першого снепшоту
+        final gameData = snapshots.docs.first.data();
 
         if (gameData != null) {
-          // Перевірте, чи гра вже стартувала
+          print('Current game state: $gameData');
+          // Перевірте, чи гра змінила свій статус на "playing"
           if (gameData['status'] == 'playing') {
-            // Оновіть стан гри відповідно
-            emit(GameStarted());
+            // Зупиніть слухання, оскільки гра стартувала
+            gameSubscription?.cancel();
+
+            // нова сторінка
+            navigateToGameStartPage();
           } else {
-            // Якщо гра не стартувала, оновіть стан гри з іншими даними
-            emit(GameLoaded(
-              playerNames: gameData['playerNames'] ?? [],
-              isGameStarter: gameData['playerNames']?.isNotEmpty ?? false,
-            ));
+            // Оновіть state, якщо є зміни в списку гравців
+            final updatedPlayerNames = List<String>.from(gameData['playerNames']);
+            emit(GameLoaded(playerNames: updatedPlayerNames, isGameStarter: updatedPlayerNames.isNotEmpty));
+            print('Updated Player Names: $updatedPlayerNames');
           }
+        } else {
+          // Вивести повідомлення, що дані не отримано
+          print('Data not received.');
         }
       } catch (e) {
-        // Обробте помилки при розборі снепшота
-        emit(GameError(message: 'Error parsing game snapshot: $e'));
+        print('Error parsing game snapshot: $e');
       }
     });
   }
+
 
   void loadGame(String accessCode) async {
     try {
@@ -68,6 +76,18 @@ class GameCubit extends Cubit<GameState> {
     } catch (e) {
       emit(GameError(message: 'Error loading game: $e'));
     }
+  }
+
+  void navigateToGameStartPage() {
+    // Використовуйте Navigator для переходу до нової сторінки
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (BuildContext context) => GameStartPage(
+          playerName: playerName,
+          gameCode: accessCode,
+        ),
+      ),
+    );
   }
 
   void updateGame(String accessCode) async {
@@ -89,28 +109,22 @@ class GameCubit extends Cubit<GameState> {
     }
   }
 
-  void startGame(BuildContext context, String accessCode, String playerName) async {
+  void updateGameStatus(String accessCode) async {
     try {
-      await gameRepository.startGame(accessCode);
+      // Оновлення статусу гри
+      await gameRepository.updateGameStatus(accessCode);
       emit(const GameStarted());
-
-      // Використовуйте Navigator для переходу до нової сторінки
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (BuildContext context) => GameStartPage(
-            playerName: playerName,
-            gameCode: accessCode,
-          ),
-        ),
-      );
     } catch (e) {
-      emit(GameError(message: 'Error starting game: $e'));
+      print('GameCubit: Error updating game status: $e');
+      emit(GameError(message: 'Error updating game status: $e'));
     }
   }
+
+
   @override
   Future<void> close() {
     // Зупинити слухання Firestore при закритті кубіту
-    gameSubscription.cancel();
+    gameSubscription?.cancel();
     return super.close();
   }
 }

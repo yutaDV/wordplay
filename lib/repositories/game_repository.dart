@@ -228,7 +228,7 @@ class GameRepository {
     }
   }
 //зміна стутусу на грати
-  Future<void> startGame(String accessCode) async {
+  Future<void> updateGameStatus(String accessCode) async {
     try {
       final QuerySnapshot querySnapshot = await gamesCollection
           .where('accessCode', isEqualTo: accessCode)
@@ -250,6 +250,5 @@ class GameRepository {
       throw Exception('Помилка при розпочатті гри: $e');
     }
   }
-
 
 }

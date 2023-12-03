@@ -47,9 +47,9 @@ class GameDetailsWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             RowItem(context, const Logo(size: 14.0), '${S.of(context).accessCode} - ${game.accessCode}'),
-            RowItem(context, const Logo(size: 14.0), '${S.of(context).difficulty}: ${game.difficulty}'),
+            RowItem(context, const Logo(size: 14.0), '${S.of(context).difficulty} ${game.difficulty}'),
             RowItem(context, const Logo(size: 14.0), '${S.of(context).roundTime}: ${game.roundTime}'),
-            RowItem(context, const Logo(size: 14.0), '${S.of(context).language}: ${game.language}'),
+            RowItem(context, const Logo(size: 14.0), '${S.of(context).language} ${game.language}'),
             RowItem(context, const Logo(size: 14.0), '${S.of(context).numberOfRounds}: ${game.winAttemptThreshold}'),
           ],
         ),

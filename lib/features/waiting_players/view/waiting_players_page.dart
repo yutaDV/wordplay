@@ -16,7 +16,7 @@ class WaitingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => GameCubit(GameRepository(), accessCode),
+      create: (context) => GameCubit(GameRepository(), accessCode, playerName, context),
       child: WaitingPageContent(accessCode: accessCode, playerName: playerName),
     );
   }
@@ -37,7 +37,7 @@ class _WaitingPageContentState extends State<WaitingPageContent> {
   void initState() {
     super.initState();
 
-    BlocProvider.of<GameCubit>(context).updateGame(widget.accessCode);
+    BlocProvider.of<GameCubit>(context).loadGame(widget.accessCode);
   }
 
   @override
@@ -101,7 +101,7 @@ class _WaitingPageContentState extends State<WaitingPageContent> {
                   MainButton(
                     text: S.of(context).startTheGame,
                     onPressed: () async {
-                      BlocProvider.of<GameCubit>(context).startGame(context, widget.accessCode, widget.playerName);
+                      context.read<GameCubit>().updateGameStatus(widget.accessCode);
                     },
                   ),
                 if (!isGameStarter)
@@ -122,3 +122,5 @@ class _WaitingPageContentState extends State<WaitingPageContent> {
     );
   }
 }
+
+
