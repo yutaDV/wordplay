@@ -1,6 +1,7 @@
 part of 'start_game_cubit.dart';
 
-abstract class GameStartState extends Equatable {
+
+class GameStartState extends Equatable {
   const GameStartState();
 
   @override

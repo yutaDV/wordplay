@@ -66,4 +66,6 @@ class PlayerModel {
       playerStatus: playerStatus,
     );
   }
+
+
 }

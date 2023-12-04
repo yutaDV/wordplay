@@ -227,7 +227,8 @@ class GameRepository {
       throw Exception('Помилка при отриманні даних про гру: $e');
     }
   }
-//зміна стутусу на грати
+
+  //зміна стутусу на грати
   Future<void> updateGameStatus(String accessCode) async {
     try {
       final QuerySnapshot querySnapshot = await gamesCollection
@@ -248,6 +249,65 @@ class GameRepository {
       }
     } catch (e) {
       throw Exception('Помилка при розпочатті гри: $e');
+    }
+  }
+
+  Future<String?> getPlayerRoleByGameCodeAndName(String gameCode, String playerName) async {
+    try {
+      final QuerySnapshot querySnapshot = await gamesCollection
+          .where('accessCode', isEqualTo: gameCode)
+          .where('status', isEqualTo: 'playing')
+          .limit(1)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        final DocumentSnapshot gameDoc = querySnapshot.docs.first;
+        final List<dynamic> playersList = gameDoc['players'] ?? [];
+
+        for (final playerData in playersList) {
+          if (playerData['name'] == playerName) {
+            return playerData['role'];
+          }
+        }
+        // Якщо гравець із зазначеним ім'ям не знайдений
+        return null;
+      } else {
+        // Якщо гра не знайдена або не в статусі "playing"
+        return null;
+      }
+    } catch (e) {
+      // Обробка помилок
+      throw Exception('Помилка при отриманні ролі гравця: $e');
+    }
+  }
+
+  //повернення імя активного гравця
+  Future<String?> getActivePlayerName(String gameCode) async {
+    try {
+      final QuerySnapshot querySnapshot = await gamesCollection
+          .where('accessCode', isEqualTo: gameCode)
+          .where('status', isEqualTo: 'playing')
+          .limit(1)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        final DocumentSnapshot gameDoc = querySnapshot.docs.first;
+        final List<dynamic> playersList = gameDoc['players'] ?? [];
+
+        for (final playerData in playersList) {
+          if (playerData['role'] == 'active') {
+            return playerData['name'];
+          }
+        }
+        // Якщо активний гравець не знайдений
+        return null;
+      } else {
+        // Якщо гра не знайдена або не в статусі "playing"
+        return null;
+      }
+    } catch (e) {
+      // Обробка помилок
+      throw Exception('Помилка при отриманні імені активного гравця: $e');
     }
   }
 

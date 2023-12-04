@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wordplay/generated/l10n.dart';
 import 'package:wordplay/models/round.dart';
 
 class PlayersListWidget extends StatelessWidget {
@@ -10,27 +11,26 @@ class PlayersListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: playersDetails.length,
-        itemBuilder: (context, index) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildPlayerInfo(context, index, playersDetails[index]),
-              _buildPlayerScores(playersDetails[index]),
-              if (playersDetails[index]['rounds'] != null &&
-                  playersDetails[index]['rounds'] is List<dynamic>) ...[
-                for (final roundData in playersDetails[index]['rounds'] as List<dynamic>)
-                  if (roundData != null && roundData is Map<String, dynamic>)
-                    _buildRoundInfo(roundData),
-              ],
-              const SizedBox(height: 10),
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const ScrollPhysics(),
+      itemCount: playersDetails.length,
+      itemBuilder: (context, index) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildPlayerInfo(context, index, playersDetails[index]),
+            _buildPlayerScores(playersDetails[index]),
+            if (playersDetails[index]['rounds'] != null &&
+                playersDetails[index]['rounds'] is List<dynamic>) ...[
+              for (final roundData in playersDetails[index]['rounds'] as List<dynamic>)
+                if (roundData != null && roundData is Map<String, dynamic>)
+                  _buildRoundInfo(roundData),
             ],
-          );
-        },
-      ),
+            const SizedBox(height: 10),
+          ],
+        );
+      },
     );
   }
 
@@ -41,14 +41,14 @@ class PlayersListWidget extends StatelessWidget {
         Text(
           '${index + 1}.',
           style: const TextStyle(
-            fontSize: 20.0,
+            fontSize: 18.0,
             fontWeight: FontWeight.bold,
           ),
         ),
         const SizedBox(width: 16),
-        Text('${player['name']}:', style: Theme.of(context).textTheme.titleSmall),
+        Text('${player['name']}:', style: const TextStyle(fontSize: 18.0,)),
         const SizedBox(width: 10),
-        Text('Рахунок: ${player['totalScore']}', style: Theme.of(context).textTheme.titleSmall),
+        Text('${S.of(context).score}. ${player['totalScore']}', style: const TextStyle(fontSize: 18.0,)),
       ],
     );
   }
