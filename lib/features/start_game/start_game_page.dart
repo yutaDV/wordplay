@@ -1,15 +1,14 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wordplay/features/start_game/start_game_cubit/start_game_cubit.dart';
+import 'package:wordplay/features/start_game/widgets_start_game/game_info.dart';
+import 'package:wordplay/features/start_game/widgets_start_game/next_move.dart';
+import 'package:wordplay/features/start_game/widgets_start_game/players_info.dart';
 import 'package:wordplay/generated/l10n.dart';
 import 'package:wordplay/models/solo_game.dart';
 import 'package:wordplay/repositories/game_repository.dart';
 import 'package:wordplay/ui/widget/app_bar.dart';
 import 'package:wordplay/ui/widget/main_button.dart';
-
-import 'widgets_start_game/game_details_widget.dart';
-
 
 class GameStartPage extends StatelessWidget {
   final String playerName;
@@ -37,6 +36,7 @@ class GameStartPage extends StatelessWidget {
     );
   }
 }
+
 class GameStartContent extends StatefulWidget {
   final String playerCode;
   final String gameCode;
@@ -74,7 +74,7 @@ class _GameStartContentState extends State<GameStartContent> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
+            return Center(child: Text('Помилка: ${snapshot.error}'));
           } else if (!snapshot.hasData) {
             return Container();
           } else {
@@ -82,14 +82,20 @@ class _GameStartContentState extends State<GameStartContent> {
             final List<Map<String, dynamic>> playersDetails = snapshot.data!['players'];
 
             // Перевірка, чи поточний гравець є активним
-            final bool isActivePlayer = playersDetails.any((player) => player['name'] == widget.playerCode && player['role'] == 'active');
+            final bool isActivePlayer = playersDetails.any(
+                  (player) => player['name'] == widget.playerCode && player['role'] == 'active',
+            );
 
             return Column(
               children: [
-
-                GameDetailsWidget(game: game, playersDetails: playersDetails),
-                if (isActivePlayer)
-                  const SizedBox(height: 20),
+                GameInfoWidget(game: game),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: PlayersListWidget(playersDetails: playersDetails),
+                  ),
+                ),
+                NextMoveWidget(playerName: isActivePlayer ? widget.playerCode : 'Невідомо'),
+                if (isActivePlayer) const SizedBox(height: 20),
                 MainButton(
                   text: S.of(context).play,
                   onPressed: () async {

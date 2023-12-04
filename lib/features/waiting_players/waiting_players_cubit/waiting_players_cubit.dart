@@ -44,7 +44,10 @@ class GameCubit extends Cubit<GameState> {
             navigateToGameStartPage();
           } else {
             // Оновіть state, якщо є зміни в списку гравців
-            final updatedPlayerNames = List<String>.from(gameData['playerNames']);
+            final playersData = List<Map<String, dynamic>>.from(gameData['players']);
+            final updatedPlayerNames = playersData
+                .map<String>((playerData) => playerData['name'].toString())
+                .toList();
             emit(GameLoaded(playerNames: updatedPlayerNames, isGameStarter: updatedPlayerNames.isNotEmpty));
             print('Updated Player Names: $updatedPlayerNames');
           }
@@ -57,7 +60,6 @@ class GameCubit extends Cubit<GameState> {
       }
     });
   }
-
 
   void loadGame(String accessCode) async {
     try {
