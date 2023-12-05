@@ -1,8 +1,8 @@
 class RoundModel {
-  int roundNumber; // Порядковий номер раунду
-  List<String> correctWords; // Перелік коректних слів
-  List<String> incorrectWords; // Перелік некоректних слов
-  int roundScore; // Рахунок раунду
+  final int roundNumber; // Порядковий номер раунду
+   List<String> correctWords; // Перелік коректних слів
+   List<String> incorrectWords; // Перелік некоректних слов
+   int roundScore; // Рахунок раунду
 
   RoundModel({
     required this.roundNumber,
