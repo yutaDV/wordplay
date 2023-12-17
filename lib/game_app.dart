@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:wordplay/features/counter_test/bloc.dart';
+import 'package:wordplay/features/counter_test/counter_page.dart';
 import 'package:wordplay/features/create_game_page/create_game_page.dart';
 import 'package:wordplay/features/start_game/start_game_page.dart';
 import 'package:wordplay/features/waiting_players/view/waiting_players_page.dart';
@@ -36,9 +38,11 @@ class GameApp extends StatelessWidget {
               supportedLocales: S.delegate.supportedLocales,
               locale: localeValue,
               home: BlocProvider(
-                create: (context) => NavigationCubit(),
+                create: (context) => CounterBloc(),//для блоку
+                //create: (context) => NavigationCubit(),// для кубіту
                 //child: GameStartPage(gameCode:'first',playerName:'tttt'),
-                child:  WelcomePage(),
+                //child:  WelcomePage(),
+                child:  CounterPage(),
                 //child: const WaitingPage(accessCode:'yulia',playerName:'yulia'),
               ),
             );
