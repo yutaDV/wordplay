@@ -1,59 +1,53 @@
-import 'package:equatable/equatable.dart';
+part of 'round_bloc.dart';
 
-class RoundState extends Equatable {
-  final String gameCode;
-  final String playerName;
-  final int roundNumber;
-  final int currentRoundScore;
-  final List<String> correctWords;
-  final List<String> incorrectWords;
-  final RoundStatus status;
-  final bool isWordGuessed; // Додано новий параметр
-
-  RoundState({
-    required this.gameCode,
-    required this.playerName,
-    required this.roundNumber,
-    required this.currentRoundScore,
-    required this.correctWords,
-    required this.incorrectWords,
-    required this.status,
-    required this.isWordGuessed, // Додано новий параметр
-  });
-
-  RoundState copyWith({
-    String? gameCode,
-    String? playerName,
-    int? roundNumber,
-    int? currentRoundScore,
-    List<String>? correctWords,
-    List<String>? incorrectWords,
-    RoundStatus? status,
-    bool? isWordGuessed, // Додано новий параметр
-  }) {
-    return RoundState(
-      gameCode: gameCode ?? this.gameCode,
-      playerName: playerName ?? this.playerName,
-      roundNumber: roundNumber ?? this.roundNumber,
-      currentRoundScore: currentRoundScore ?? this.currentRoundScore,
-      correctWords: correctWords ?? this.correctWords,
-      incorrectWords: incorrectWords ?? this.incorrectWords,
-      status: status ?? this.status,
-      isWordGuessed: isWordGuessed ?? this.isWordGuessed,
-    );
-  }
-
-  @override
-  List<Object?> get props => [
-    gameCode,
-    playerName,
-    roundNumber,
-    currentRoundScore,
-    correctWords,
-    incorrectWords,
-    status,
-    isWordGuessed,
-  ];
+abstract class RoundState extends Equatable {
+  const RoundState();
 }
 
-enum RoundStatus { initializing, guessed, notGuessed, roundOver, error }
+class RoundInitial extends RoundState {
+  const RoundInitial();
+
+  @override
+  List<Object> get props => [];
+}
+
+class RoundRunning extends RoundState {
+  final String gameCode;
+  final String playerName;
+  final int duration;
+
+  const RoundRunning(this.gameCode, this.playerName, this.duration);
+
+  @override
+  List<Object> get props => [gameCode, playerName, duration];
+}
+
+class RoundDisplayWord extends RoundState {
+  final String word;
+
+  const RoundDisplayWord(this.word);
+
+  @override
+  List<Object> get props => [word];
+}
+
+class RoundGuessingWord extends RoundState {
+  const RoundGuessingWord();
+
+  @override
+  List<Object> get props => [];
+}
+
+class RoundIncorrectGuess extends RoundState {
+  const RoundIncorrectGuess();
+
+  @override
+  List<Object> get props => [];
+}
+
+class RoundComplete extends RoundState {
+  const RoundComplete();
+
+  @override
+  List<Object> get props => [];
+}

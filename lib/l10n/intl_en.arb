@@ -14,6 +14,7 @@
   "yourName": "Your name",
   "dialogJoinGame": "Enter the code of the game you want to join and your name",
   "menu": "Start menu",
+  "round": "Round №",
   "dialogAddWord": "Enter the word you want to add its language and difficulty",
   "word": "Word",
   "language": "Language:",
@@ -48,6 +49,8 @@
   "nextMove": "The next move ",
   "player": "Player",
   "playsNext": "plays next",
+  "guessedWords": "Guessed words:",
+  "unguessedWords": "Unguessed words:",
   "play": "play",
   "youHaveJoinedTheGame": "You have joined the game. Access Code - "
 }

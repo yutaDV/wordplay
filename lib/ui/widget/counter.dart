@@ -14,24 +14,37 @@ class CounterWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        Text(
-          '$counter',
-          style: Theme.of(context).textTheme.titleLarge,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            FloatingActionButton(
+              onPressed: onIncrement,
+              tooltip: 'Increment',
+              child: const Icon(Icons.add),
+            ),
+          ],
         ),
-        const SizedBox(height: 10),
-        FloatingActionButton(
-          onPressed: onIncrement,
-          tooltip: 'Increment',
-          child: const Icon(Icons.add),
+        Expanded(
+          child: Align(
+            alignment: Alignment.center,
+            child: Text(
+              '$counter',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+          ),
         ),
-        const SizedBox(height: 10),
-        FloatingActionButton(
-          onPressed: onDecrement,
-          tooltip: 'Decrement',
-          backgroundColor: Theme.of(context).colorScheme.error,
-          child: const Icon(Icons.remove),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            FloatingActionButton(
+              onPressed: onDecrement,
+              tooltip: 'Decrement',
+              backgroundColor: Theme.of(context).colorScheme.error,
+              child: const Icon(Icons.remove),
+            ),
+          ],
         ),
       ],
     );
