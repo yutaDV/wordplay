@@ -49,8 +49,8 @@
   "nextMove": "Наступний хід ",
   "player": "Гравець",
   "playsNext": "грає наступним",
-  "guessedWords": "Відгадані слова:",
-  "unguessedWords": "Невідгадані слова:",
+  "guessedWords": "Вау !!!:",
+  "unguessedWords": "Упс...:",
   "play": "грати",
   "youHaveJoinedTheGame": "Ви долучились до гри!  код гри  "
 }

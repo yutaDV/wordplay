@@ -49,8 +49,8 @@
   "nextMove": "The next move ",
   "player": "Player",
   "playsNext": "plays next",
-  "guessedWords": "Guessed words:",
-  "unguessedWords": "Unguessed words:",
+  "guessedWords": "Wow!!!:",
+  "unguessedWords": "Оops.....:",
   "play": "play",
   "youHaveJoinedTheGame": "You have joined the game. Access Code - "
 }
