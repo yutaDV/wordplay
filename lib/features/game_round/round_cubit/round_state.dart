@@ -18,12 +18,11 @@ class RoundInitialState extends RoundState {
   final String activeWord;
 
   RoundInitialState({
-    this.counter = 0,
-    List<String>? correctWords,
-    List<String>? incorrectWords,
+    required this.counter,
+    required this.correctWords,
+    required this.incorrectWords,
     required this.activeWord,
-  })  : correctWords = correctWords ?? [],
-        incorrectWords = incorrectWords ?? [];
+  });
 
   @override
   List<Object?> get props => [counter, correctWords, incorrectWords, activeWord];

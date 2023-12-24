@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wordplay/features/game_round/round_cubit/round_cubit.dart';
+import 'package:wordplay/features/game_round/round_repository.dart';
 import 'package:wordplay/ui/widget/timer.dart';
 import '../../generated/l10n.dart';
 import '../../ui/widget/app_bar.dart';
 
 
 class RoundPage extends StatelessWidget {
-  const RoundPage({super.key});
+  final String accessCode;
+  final String playerName;
+  const RoundPage({Key? key, required this.accessCode, required this.playerName});
 
   @override
   Widget build(BuildContext context) {
+    final roundRepository = RoundRepository();
+
     return BlocProvider(
-      create: (context) => RoundCubit(),
+      create: (context) => RoundCubit(roundRepository: roundRepository, accessCode: accessCode),
       child: _RoundPage(),
     );
   }

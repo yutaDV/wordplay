@@ -40,7 +40,7 @@ class GameApp extends StatelessWidget {
                 create: (context) => NavigationCubit(),// для кубіту
                 //child: GameStartPage(gameCode:'first',playerName:'tttt'),
                 //child:  WelcomePage(),
-                child:  RoundPage(),
+                child:  RoundPage(accessCode: '11111',playerName:'11'),
                 //child: const WaitingPage(accessCode:'yulia',playerName:'yulia'),
               ),
             );
