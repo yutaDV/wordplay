@@ -4,41 +4,26 @@ abstract class RoundState extends Equatable {
   const RoundState();
 
   RoundState copyWith({
-    int? counter,
-    List<String>? correctWords,
-    List<String>? incorrectWords,
-    String? activeWord,
+    Round? round,
   });
 }
 
 class RoundInitialState extends RoundState {
-  final int counter;
-  final List<String> correctWords;
-  final List<String> incorrectWords;
-  final String activeWord;
+  final Round round;
 
   RoundInitialState({
-    required this.counter,
-    required this.correctWords,
-    required this.incorrectWords,
-    required this.activeWord,
+    required this.round,
   });
 
   @override
-  List<Object?> get props => [counter, correctWords, incorrectWords, activeWord];
+  List<Object?> get props => [round];
 
   @override
   RoundState copyWith({
-    int? counter,
-    List<String>? correctWords,
-    List<String>? incorrectWords,
-    String? activeWord,
+    Round? round,
   }) {
     return RoundInitialState(
-      counter: counter ?? this.counter,
-      correctWords: correctWords ?? this.correctWords,
-      incorrectWords: incorrectWords ?? this.incorrectWords,
-      activeWord: activeWord ?? this.activeWord,
+      round: round ?? this.round,
     );
   }
 }

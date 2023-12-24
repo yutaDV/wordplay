@@ -17,7 +17,7 @@ class RoundPage extends StatelessWidget {
     final roundRepository = RoundRepository();
 
     return BlocProvider(
-      create: (context) => RoundCubit(roundRepository: roundRepository, accessCode: accessCode),
+      create: (context) => RoundCubit(roundRepository: roundRepository, accessCode: accessCode, playerName: playerName),
       child: _RoundPage(),
     );
   }
@@ -49,7 +49,7 @@ class _RoundPage extends StatelessWidget {
                       showCircle: true,
                     ),
                     Text(
-                      '${(state as RoundInitialState).counter ?? 0}',
+                      '${(state as RoundInitialState).round.currentRoundScore ?? 0}',
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -75,7 +75,7 @@ class _RoundPage extends StatelessWidget {
                   child: Wrap(
                     spacing: 8.0,
                     runSpacing: 6.0,
-                    children: state.correctWords.map((word) {
+                    children: state.round.correctWords.map((word) {
                       return Padding(
                         padding: const EdgeInsets.all(6.0),
                         child: Text(word, style: Theme.of(context).textTheme.bodyMedium),
@@ -96,7 +96,7 @@ class _RoundPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 24),
                     Text(
-                      state.activeWord,
+                      state.round.activeWord,
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     const SizedBox(height: 24),
@@ -135,7 +135,7 @@ class _RoundPage extends StatelessWidget {
                         child: Wrap(
                           spacing: 8.0,
                           runSpacing: 6.0,
-                          children: state.incorrectWords.map((word) {
+                          children: state.round.incorrectWords.map((word) {
                             return Padding(
                               padding: const EdgeInsets.fromLTRB(8, 0, 0, 8),
                               child: Text(
