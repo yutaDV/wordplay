@@ -4,12 +4,12 @@ abstract class RoundState extends Equatable {
   const RoundState();
 
   RoundState copyWith({
-    Round? round,
+    PlayRound? round,
   });
 }
 
 class RoundInitialState extends RoundState {
-  final Round round;
+  final PlayRound round;
 
   RoundInitialState({
     required this.round,
@@ -20,10 +20,23 @@ class RoundInitialState extends RoundState {
 
   @override
   RoundState copyWith({
-    Round? round,
+    PlayRound? round,
   }) {
     return RoundInitialState(
       round: round ?? this.round,
     );
   }
+  
 }
+
+
+class RoundFinishedState extends RoundState {
+  @override
+  List<Object?> get props => [];
+
+  @override
+  RoundState copyWith({PlayRound? round}) {
+    return RoundFinishedState();
+  }
+}
+

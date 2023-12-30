@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/player.dart';
+import 'package:wordplay/models/player.dart';
 import '../models/solo_game.dart';
 import '../models/round.dart';
 import '../repositories/word_repository.dart';
@@ -310,5 +310,60 @@ class GameRepository {
       throw Exception('Помилка при отриманні імені активного гравця: $e');
     }
   }
+
+  Future<void> updatePlayerRound(
+      String gameCode,
+      String playerName,
+      int currentRoundScore,
+      List<String> correctWords,
+      List<String> incorrectWords,
+      ) async {
+    try {
+      final QuerySnapshot querySnapshot = await gamesCollection
+          .where('accessCode', isEqualTo: gameCode)
+          .where('status', isEqualTo: 'playing')
+          .limit(1)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        final DocumentSnapshot gameDoc = querySnapshot.docs.first;
+        final List<dynamic> playersList = List.from(gameDoc['players'] ?? []);
+
+        for (int i = 0; i < playersList.length; i++) {
+          final playerData = playersList[i];
+          if (playerData['name'] == playerName) {
+            final List<Map<String, dynamic>> roundsData =
+            (playerData['rounds'] as List<dynamic>)
+                .map((roundData) =>
+            Map<String, dynamic>.from(roundData))
+                .toList();
+
+            // Створення об'єкта RoundModel для збереження нового раунду гравця
+            final round = RoundModel(
+              roundNumber: roundsData.length, // Номер раунду може бути визначено таким чином
+              correctWords: correctWords,
+              incorrectWords: incorrectWords,
+              roundScore: currentRoundScore,
+            );
+
+            // Додавання нового раунду до списку раундів гравця
+            roundsData.add(round.toMap());
+
+            // Оновлення гравця в базі даних
+            playersList[i]['rounds'] = roundsData;
+            await gameDoc.reference.update({
+              'players': playersList,
+            });
+            break; // Завершити цикл, оскільки гравець знайдений і оновлення виконано
+          }
+        }
+      } else {
+        throw Exception('Гра не знайдена або не в статусі "playing".');
+      }
+    } catch (e) {
+      throw Exception('Помилка при оновленні раунду гравця: $e');
+    }
+  }
+
 
 }

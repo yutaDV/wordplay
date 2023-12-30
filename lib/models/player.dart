@@ -67,5 +67,11 @@ class PlayerModel {
     );
   }
 
+  int getMaxRoundNumber() {
+    if (rounds.isEmpty) {
+      return -1; // Якщо немає раундів, повертаємо -1 або інше значення за замовчуванням
+    }
 
+    return rounds.map((round) => round.roundNumber).reduce((a, b) => a > b ? a : b);
+  }
 }

@@ -1,8 +1,7 @@
 
 import 'package:equatable/equatable.dart';
 
-class Round extends Equatable {
-  final int roundNumber;
+class PlayRound extends Equatable {
   final String gameCode;
   final String playerName;
   final int currentRoundScore;
@@ -10,8 +9,7 @@ class Round extends Equatable {
   final List<String> incorrectWords;
   final String activeWord;
 
-  Round({
-    required this.roundNumber,
+  PlayRound({
     required this.gameCode,
     required this.playerName,
     required this.currentRoundScore,
@@ -22,7 +20,6 @@ class Round extends Equatable {
 
   @override
   List<Object?> get props => [
-    roundNumber,
     gameCode,
     playerName,
     currentRoundScore,
@@ -31,8 +28,7 @@ class Round extends Equatable {
     activeWord,
   ];
 
-  Round copyWith({
-    int? roundNumber,
+  PlayRound copyWith({
     String? gameCode,
     String? playerName,
     int? currentRoundScore,
@@ -41,8 +37,7 @@ class Round extends Equatable {
     String? activeWord,
     String? gameName,
   }) {
-    return Round(
-      roundNumber: roundNumber ?? this.roundNumber,
+    return PlayRound(
       gameCode: gameCode ?? this.gameCode,
       playerName: playerName ?? this.playerName,
       currentRoundScore: currentRoundScore ?? this.currentRoundScore,
